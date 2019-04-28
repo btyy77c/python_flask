@@ -1,21 +1,22 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, render_template
+
 app = Flask(__name__)
 
 @app.route('/')
 def Home():
-    return 'Home Page! List Categories and Latest Items'
+    return render_template('categories/index.html')
 
-@app.route('/category/name')
-def CategoryShow():
-    return "Category Show Page"
+@app.route('/category/<name>')
+def CategoryShow(name):
+    return render_template('categories/show.html', name=name)
 
-@app.route('/category/name/items')
-def ItemIndex():
-    return 'Items by Category Name'
+@app.route('/category/<name>/items')
+def ItemIndex(name):
+    return render_template('items/index.html', name=name)
 
-@app.route('/item/name')
-def ItemShow():
-    return "Item Show Page"
+@app.route('/item/<name>')
+def ItemShow(name):
+    return render_template('items/show.html', name=name)
 
 if __name__ == '__main__':
     app.debug = True
