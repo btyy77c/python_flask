@@ -5,18 +5,18 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-class CategoryDatabase(Base):
+class CategoryTable(Base):
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
 
-class ItemDatabase(Base):
+class ItemTable(Base):
     __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'))
-    category = relationship(CategoryDatabase)
+    category = relationship(CategoryTable)
     description = Column(Text)
     title = Column(String(250), nullable=False)
 
