@@ -9,7 +9,7 @@ class CategoryTable(Base):
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False, unique=True)
 
 class ItemTable(Base):
     __tablename__ = 'items'
