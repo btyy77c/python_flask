@@ -21,5 +21,5 @@ class ItemDatabase(Base):
     title = Column(String(250), nullable=False)
 
 
-engine = create_engine('sqlite:///catalog.db')
+engine = create_engine('sqlite:///database/catalog.db')
 Base.metadata.create_all(engine)
