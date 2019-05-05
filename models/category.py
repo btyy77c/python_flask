@@ -1,12 +1,9 @@
 import os, sys
-
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
 from setup import CategoryTable
-from session import Session
 
-session = Session()
 database_table = CategoryTable
 
 class Category:
@@ -15,7 +12,7 @@ class Category:
         self.id = id
 
     @classmethod
-    def all(cls):
+    def all(cls, session):
         db_categories = session.query(database_table).all()
         categories = []
         for db_category in db_categories:
@@ -30,7 +27,7 @@ class Category:
 
     def save():
         db_object = session.query(database_table).filter_by(id = self.id).one()
-        db_object.name self.name
+        db_object.name = self.name
         session.add(db_object)
         session.commit()
         return ' Finish ME!!!'

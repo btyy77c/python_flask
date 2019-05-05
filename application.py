@@ -1,10 +1,20 @@
+import os, sys
+from os.path import dirname, join, abspath
+sys.path.insert(0, abspath(join(dirname(__file__), './models')))
+sys.path.insert(0, abspath(join(dirname(__file__), './database')))
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
+from category import Category
+from session import Session
+
 @app.route('/')
 def Home():
-    return render_template('categories/index.html')
+    db_session = Session()
+    categories = Category.all(db_session)
+    return render_template('categories/index.html', categories=categories)
 
 @app.route('/category/<name>')
 def CategoryShow(name):
