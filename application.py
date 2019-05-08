@@ -7,6 +7,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 from categories import CategoriesController
+from items import ItemsController
 
 @app.route('/')
 @app.route('/categories')
@@ -19,7 +20,7 @@ def CategoryShow(name):
 
 @app.route('/categories/<name>/items')
 def ItemIndex(name):
-    return render_template('items/index.html', name=name)
+    return ItemsController().index(name)
 
 @app.route('/items/<name>')
 def ItemShow(name):
