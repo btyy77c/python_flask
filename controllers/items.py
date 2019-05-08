@@ -15,3 +15,6 @@ class ItemsController:
     def index(self, category_name):
         # items = ItemModel.all(self.db_session).filter_by(category_name)
         return render_template('items/index.html', category_name=category_name)
+
+    def show(self, item_name):
+        return render_template('items/show.html', name=item_name)

@@ -24,7 +24,7 @@ def ItemIndex(name):
 
 @app.route('/items/<name>')
 def ItemShow(name):
-    return render_template('items/show.html', name=name)
+    return ItemsController().show(name)
 
 if __name__ == '__main__':
     app.debug = True
