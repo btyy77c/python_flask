@@ -4,12 +4,11 @@ sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
 from setup import CategoryTable
 
-database_table = CategoryTable
-
 class CategoryModel:
     def __init__(self, name, id):
-        self.name = name
         self.id = id
+        self.name = name
+        self.database_table = CategoryTable
 
     def delete():
         db_object = session.query(database_table).filter_by(id = self.id).one()
@@ -26,6 +25,7 @@ class CategoryModel:
 
     @classmethod
     def all(cls, session):
+        database_table = CategoryTable
         db_categories = session.query(database_table).all()
         categories = []
         for db_category in db_categories:

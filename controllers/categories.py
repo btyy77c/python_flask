@@ -6,6 +6,7 @@ sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 from flask import render_template
 
 from category import CategoryModel
+from item import ItemModel
 from session import Session
 
 class CategoriesController:
@@ -14,6 +15,7 @@ class CategoriesController:
 
     def index(self):
         categories = CategoryModel.all(self.db_session)
+        latest_items = ItemModel.latest(self.db_session)
         return render_template('categories/index.html', categories=categories)
 
     def show(self, category_name):
