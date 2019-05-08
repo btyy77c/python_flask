@@ -9,6 +9,7 @@ app = Flask(__name__)
 from categories import CategoriesController
 
 @app.route('/')
+@app.route('/categories')
 def Home():
     return CategoriesController().index()
 
