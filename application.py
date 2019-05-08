@@ -12,15 +12,15 @@ from categories import CategoriesController
 def Home():
     return CategoriesController().index()
 
-@app.route('/category/<name>')
+@app.route('/categories/<name>')
 def CategoryShow(name):
-    return render_template('categories/show.html', name=name)
+    return CategoriesController().show(name)
 
-@app.route('/category/<name>/items')
+@app.route('/categories/<name>/items')
 def ItemIndex(name):
     return render_template('items/index.html', name=name)
 
-@app.route('/item/<name>')
+@app.route('/items/<name>')
 def ItemShow(name):
     return render_template('items/show.html', name=name)
 

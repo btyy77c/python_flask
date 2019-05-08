@@ -15,3 +15,6 @@ class CategoriesController:
     def index(self):
         categories = CategoryModel.all(self.db_session)
         return render_template('categories/index.html', categories=categories)
+
+    def show(self, item_name):
+        return render_template('categories/show.html', name=item_name)
