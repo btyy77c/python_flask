@@ -11,6 +11,7 @@ class CategoryTable(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False, unique=True)
+    created_by = Column(String(250), nullable=False)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
 
