@@ -15,7 +15,7 @@ class ItemModel:
     @classmethod
     def latest(cls, session):
         database_table = ItemTable
-        db_items = session.query(database_table).order_by(ItemTable.created_date.desc()).limit(10)
+        db_items = session.query(database_table).order_by(database_table.created_date.desc()).limit(10)
         items = []
         for db_item in db_items:
             items.append(cls(db_item.id, db_item.category_id, db_item.description, db_item.title))
