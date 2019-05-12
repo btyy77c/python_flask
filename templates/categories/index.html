@@ -2,7 +2,7 @@
 
 {% block content %}
   <h1>Home Page!!!</h1>
-  <h2>All Categories</h2>
+  <h2>Categories ({{ categories.__len__() }})</h2>
 
   <form id='createCategory'>
   </form>
@@ -12,5 +12,5 @@
   {% endfor %}
 
   <hr />
-  <h2>Latest Items</h2>
+  <h2>Latest Items TODO!</h2>
 {% endblock %}
