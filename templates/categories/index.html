@@ -1,9 +1,16 @@
-<h1>Home Page!!!</h1>
-<h2>All Categories</h2>
+{% extends 'layout/index.html' %}
 
-{% for category in categories %}
-  <p>{{ category.name }}</p>
-{% endfor %}
+{% block content %}
+  <h1>Home Page!!!</h1>
+  <h2>All Categories</h2>
 
-<hr />
-<h2>Latest Items</h2>
+  <form id='createCategory'>
+  </form>
+
+  {% for category in categories %}
+    <p>{{ category.name }}</p>
+  {% endfor %}
+
+  <hr />
+  <h2>Latest Items</h2>
+{% endblock %}

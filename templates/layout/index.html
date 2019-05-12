@@ -12,12 +12,15 @@
 
     <!-- CSS file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+    <!-- JS File -->
+    <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    <title>Basic Flask Web App</title>
   </head>
 
   <body>
     {% block content %}
     {% endblock %}
-
-    <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
   </body>
 </html>
