@@ -13,12 +13,17 @@ class CategoriesController:
     def __init__(self):
         self.db_session = Session()
 
+    def edit(self, category_name):
+        # Find by category_name
+        return render_template('categories/edit.html')
+
     def index(self):
         categories = CategoryModel.all(self.db_session)
         latest_items = ItemModel.latest(self.db_session)
         return render_template('categories/index.html', categories=categories)
 
     def show(self, category_name):
+        # Find by category_name
         return render_template('categories/show.html', name=category_name)
 
     def new(self):

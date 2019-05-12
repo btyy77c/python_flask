@@ -18,15 +18,19 @@ def Home():
 def CategoryNew():
     return CategoriesController().new()
 
-@app.route('/categories/<name>')
+@app.route('/category/<name>')
 def CategoryShow(name):
     return CategoriesController().show(name)
 
-@app.route('/categories/<name>/items')
+@app.route('/category/<name>/edit')
+def CategoryEdit(name):
+    return CategoriesController().edit(name)
+
+@app.route('/category/<name>/items')
 def ItemIndex(name):
     return ItemsController().index(name)
 
-@app.route('/items/<name>')
+@app.route('/item/<name>')
 def ItemShow(name):
     return ItemsController().show(name)
 
