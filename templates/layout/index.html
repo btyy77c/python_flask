@@ -4,12 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1">
 
-    <meta name="theme-color" content="#d3d3d3"/>
+    <meta name="theme-color" content="#cccccc"/>
     <meta name="Description" content="Basic Flask Web App">
+
+    <!-- Normalize.css for better cross-browser consistency -->
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
   </head>
 
   <body>
     {% block content %}
     {% endblock %}
+
+    <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
   </body>
 </html>
