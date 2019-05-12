@@ -22,13 +22,16 @@ const submitForm = (form) => {
 
 export default {
   createNewCategory() {
-    let form = document.getElementById('createCategory')
-    if (form) {
-      addInput(form, 'Category Name', 'name', null, 'Category Name')
-      addButton(form, 'Create Category').addEventListener('click', (e) => {
-        e.preventDefault()
-        submitForm(form)
-      })
-    }
+    let div = document.getElementById('createCategory')
+    if (div == null) { return }
+
+    let form = document.createElement('form')
+    div.appendChild(form)
+
+    addInput(form, 'Category Name', 'name', null, 'Category Name')
+    addButton(form, 'Create Category').addEventListener('click', (e) => {
+      e.preventDefault()
+      submitForm(form)
+    })
   }
 }

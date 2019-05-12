@@ -1,11 +1,8 @@
 {% extends 'layout/index.html' %}
 
 {% block content %}
-  <h1>Home Page!!!</h1>
   <h2>Categories ({{ categories.__len__() }})</h2>
-
-  <form id='createCategory'>
-  </form>
+  <div id='createCategory'></div>
 
   {% for category in categories %}
     <p>{{ category.name }}</p>
