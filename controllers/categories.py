@@ -24,6 +24,7 @@ class CategoriesController:
 
     def show(self, category_name):
         # Find by category_name
+        # Find items related to category
         return render_template('categories/show.html', name=category_name)
 
     def new(self):

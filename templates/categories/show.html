@@ -1,1 +1,7 @@
-<h1>Category Show Page {{ name }}</h1>
+{% extends 'layout/index.html' %}
+
+{% block content %}
+  <h1>Category Show Page {{ name }}</h1>
+
+  <h2>Items for {{ name }}</h2>
+{% endblock %}
