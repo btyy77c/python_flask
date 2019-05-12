@@ -14,6 +14,10 @@ from items import ItemsController
 def Home():
     return CategoriesController().index()
 
+@app.route('/categories/new')
+def CategoryNew():
+    return CategoriesController().new()
+
 @app.route('/categories/<name>')
 def CategoryShow(name):
     return CategoriesController().show(name)

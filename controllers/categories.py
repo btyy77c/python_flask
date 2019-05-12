@@ -20,3 +20,6 @@ class CategoriesController:
 
     def show(self, category_name):
         return render_template('categories/show.html', name=category_name)
+
+    def new(self):
+        return render_template('categories/new.html')
