@@ -2,7 +2,7 @@ import os, sys
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), './controllers')))
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -10,9 +10,16 @@ from categories import CategoriesController
 from items import ItemsController
 
 @app.route('/')
-@app.route('/categories')
 def Home():
     return CategoriesController().index()
+
+@app.route('/categories', methods=['GET', 'POST'])
+def CategoryIndex():
+    if request.method == 'POST':
+        form = request.get_json()
+        return CategoriesController().create(form['name'], 'TODO: ADD USE EMAIL')
+    else:
+        return CategoriesController().index()
 
 @app.route('/category/<name>')
 def CategoryShow(name):
