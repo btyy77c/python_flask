@@ -31,3 +31,10 @@ class CategoryModel:
         for db_category in db_categories:
             categories.append(cls(db_category.name, db_category.id))
         return categories
+
+    @classmethod
+    def create(cls, session, name, created_by):
+        db_object = CategoryTable(name = name, created_by = created_by)
+        session.add(db_object)
+        session.commit()
+        return cls(db_object.name, db_object.id)
