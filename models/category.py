@@ -2,17 +2,28 @@ import os, sys
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
+import datetime
 from setup import CategoryTable
 
 class CategoryModel:
     def __init__(self, values_hash):
-        self.created_by = values_hash.get('created_by', '')
+        self.created_by = values_hash.get('created_by', None)
         self.created_date = values_hash.get('created_date', None)
         self.database_table = CategoryTable
+        self.description = values_hash.get('description', '')
         self.errors = values_hash.get('errors', None)
         self.id = values_hash.get('id', None)
         self.name = values_hash.get('name', '')
         self.updated_date = values_hash.get('updated_date', None)
+
+    def __update_database(self, session):
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            self.errors = 'failed to update database'
+        return self
+
 
     def attributes(self):
         return {
@@ -24,58 +35,34 @@ class CategoryModel:
             'updated_date': self.updated_date
         }
 
-    def delete(self):
+    def delete(self, session):
         db_object = session.query(database_table).filter_by(id = self.id).one()
-        try:
-            session.delete(db_object)
-            session.commit()
-        except:
-            session.rollback()
-            self.errors = 'failed to delete'
-        return self
+        session.delete(db_object)
+        return self.__update_database(session)
 
-    def save(self):
-        db_object = session.query(database_table).filter_by(id = self.id).one()
-        try:
+    def save(self, session):
+        if self.id == None:
+            db_object = self.database_table(
+                name = self.name,
+                description = self.description,
+                created_by = self.created_by
+            )
+            session.add(db_object)
+        else:
+            db_object = session.query(self.database_table).filter_by(id = self.id).one()
             db_object.update(self.attributes())
-            session.commit()
-        except:
-            session.rollback()
-            self.errors = 'failed to update'
-        return self
+
+        return self.__update_database(session)
 
     @classmethod
     def all(cls, session):
         database_table = CategoryTable
-        db_categories = session.query(database_table).order_by(
+        db_objects = session.query(database_table).order_by(
             database_table.created_date.desc(),
             database_table.id.desc()
         ).all()
 
-        categories = []
-        for db_category in db_categories:
-            categories.append(cls.init_from_db(db_category))
-        return categories
-
-    @classmethod
-    def create(cls, session, name, created_by):
-        database_table = CategoryTable
-        db_category = database_table(name = name, created_by = created_by)
-        try:
-            session.add(db_category)
-            session.commit()
-            category = cls.init_from_db(db_category)
-        except:
-            session.rollback()
-            category = cls({ 'errors': 'failed to create' })
-        return category
-
-    @classmethod
-    def init_from_db(cls, db_category):
-        return cls({
-            'created_by': db_category.created_by,
-            'created_date': db_category.created_date,
-            'id': db_category.id,
-            'name': db_category.name,
-            'updated_date': db_category.updated_date
-        })
+        objects = []
+        for db_object in db_objects:
+            objects.append(cls(db_object.serialize()))
+        return objects

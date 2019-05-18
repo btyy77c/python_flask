@@ -13,8 +13,9 @@ class CategoriesController:
     def __init__(self):
         self.db_session = Session()
 
-    def create(self, name, created_by):
-        category = CategoryModel.create(self.db_session, name, created_by)
+    def create(self, values_hash):
+        category = CategoryModel(values_hash)
+        category.save(self.db_session)
         return jsonify(category.attributes())
 
     def delete(self, name):

@@ -33,7 +33,11 @@ const changeErrorMessage = (message) => {
 const submitForm = (form) => {
   fetch('/categories', {
     method: 'POST',
-    body: JSON.stringify({ name: form.name.value }),
+    body: JSON.stringify({
+      created_by: 'A Fake User',
+      description: 'ADD description',
+      name: form.name.value
+    }),
     headers: {
       'Content-Type': 'application/json',
     }

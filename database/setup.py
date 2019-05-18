@@ -10,10 +10,22 @@ class CategoryTable(Base):
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False, unique=True)
+    description = Column(String(250), nullable=False, default='')
     created_by = Column(String(250), nullable=False)
+    name = Column(String(250), nullable=False, unique=True)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
+
+    def serialize(self):
+        return {
+            'created_by': self.created_by,
+            'created_date': self.created_date,
+            'description': self.description,
+            'id': self.id,
+            'name': self.name,
+            'updated_date': self.updated_date
+        }
+
 
 class ItemTable(Base):
     __tablename__ = 'items'

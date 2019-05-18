@@ -17,7 +17,7 @@ def Home():
 def CategoryIndex():
     if request.method == 'POST':
         form = request.get_json()
-        return CategoriesController().create(form['name'], 'TODO:user_email')
+        return CategoriesController().create(form)
     else:
         return CategoriesController().index()
 
