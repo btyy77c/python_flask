@@ -10,10 +10,10 @@ class CategoryModel:
         self.created_by = values_hash.get('created_by', None)
         self.created_date = values_hash.get('created_date', None)
         self.database_table = CategoryTable
-        self.description = values_hash.get('description', '')
+        self.description = values_hash.get('description', None)
         self.errors = values_hash.get('errors', None)
         self.id = values_hash.get('id', None)
-        self.name = values_hash.get('name', '')
+        self.name = values_hash.get('name', None)
         self.updated_date = values_hash.get('updated_date', None)
 
     def __update_database(self, session):

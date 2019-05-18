@@ -14,15 +14,21 @@ const addErrorTag = (form) => {
   return p
 }
 
-const addInput = (div, label, name, value, placeholder) => {
+const addFormFields = (form) => {
   const input = document.createElement('input')
   input.type = 'text'
-  input.setAttribute('aria-label', label)
-  input.name = name
-  input.value = value
-  input.placeholder = placeholder
-  div.appendChild(input)
-  return input
+  input.setAttribute('aria-label', 'Category Name')
+  input.name = 'name'
+  input.value = null
+  input.placeholder = 'Category Name'
+  form.appendChild(input)
+
+  const textArea = document.createElement('textarea')
+  textArea.setAttribute('aria-label', 'Category Description')
+  textArea.placeholder = 'Category Description'
+  textArea.name = 'description'
+  textArea.value = null
+  form.appendChild(textArea)
 }
 
 const changeErrorMessage = (message) => {
@@ -35,7 +41,7 @@ const submitForm = (form) => {
     method: 'POST',
     body: JSON.stringify({
       created_by: 'A Fake User',
-      description: 'ADD description',
+      description: form.description.value,
       name: form.name.value
     }),
     headers: {
@@ -62,7 +68,7 @@ export default {
     let form = document.createElement('form')
     div.appendChild(form)
 
-    addInput(form, 'Category Name', 'name', null, 'Category Name')
+    addFormFields(form)
 
     addButton(form, 'Create Category').addEventListener('click', (e) => {
       e.preventDefault()
