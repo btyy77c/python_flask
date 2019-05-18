@@ -48,7 +48,8 @@ class CategoryModel:
     def all(cls, session):
         database_table = CategoryTable
         db_categories = session.query(database_table).order_by(
-            database_table.created_date.desc()
+            database_table.created_date.desc(),
+            database_table.id.desc()
         ).all()
 
         categories = []

@@ -5,7 +5,9 @@
   <div id='createCategory'></div>
 
   {% for category in categories %}
-    <p>{{ category.name }}</p>
+    <a href='{{ url_for('CategoryShow', name=category.name) | replace('%20', '%2D') }}'>
+      <p>{{ category.name }}</p>
+    </a>
   {% endfor %}
 
   <hr />
