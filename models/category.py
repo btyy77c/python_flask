@@ -3,6 +3,7 @@ from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
 import datetime
+from item import ItemModel
 from setup import CategoryTable
 
 class CategoryModel:
@@ -53,6 +54,7 @@ class CategoryModel:
         else:
             db_object = session.query(self.database_table).filter_by(id = self.id).one()
             session.delete(db_object)
+            ItemModel.delete_category_group(self.id, session)
             return self.__update_database(session)
 
     def update(self, session):

@@ -24,7 +24,7 @@ const deleteCategory = (path) => {
 }
 
 export default {
-  categoryDelete() {
+  load() {
     const div = document.getElementById('categoryDelete')
     if (div == null) { return }
     const path = location.pathname

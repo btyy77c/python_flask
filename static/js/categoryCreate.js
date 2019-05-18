@@ -61,7 +61,7 @@ const submitForm = (form) => {
 }
 
 export default {
-  createNewCategory() {
+  load() {
     let div = document.getElementById('createCategory')
     if (div == null) { return }
 

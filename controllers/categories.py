@@ -3,9 +3,8 @@ from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../models')))
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
-from flask import render_template, jsonify
-
 from category import CategoryModel
+from flask import render_template, jsonify
 from item import ItemModel
 from session import Session
 

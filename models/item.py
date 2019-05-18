@@ -13,9 +13,16 @@ class ItemModel:
         self.database_table = ItemTable
 
     @classmethod
+    def delete_category_group(cls, category_id, session):
+        db_items = session.query(ItemTable).filter_by(category_id = category_id)
+        for db_item in db_items:
+            session.delete(db_item)
+        return db_items
+
+
+    @classmethod
     def latest(cls, session):
-        database_table = ItemTable
-        db_items = session.query(database_table).order_by(database_table.created_date.desc()).limit(10)
+        db_items = session.query(ItemTable).order_by(database_table.created_date.desc()).limit(10)
         items = []
         for db_item in db_items:
             items.append(cls(db_item.id, db_item.category_id, db_item.description, db_item.title))
