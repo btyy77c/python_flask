@@ -18,14 +18,14 @@ class CategoriesController:
         return jsonify(category.attributes())
 
     def delete(self, name):
-        print("TODO!")
-
+        category = CategoryModel.find(self.db_session, name).delete(self.db_session)
+        return jsonify(category.attributes())
 
     def index(self):
         categories = CategoryModel.all(self.db_session)
         latest_items = ItemModel.latest(self.db_session)
         return render_template('categories/index.html', categories=categories)
 
-    def show(self, category_name):
-        category = CategoryModel.find(self.db_session, category_name)
+    def show(self, name):
+        category = CategoryModel.find(self.db_session, name)
         return render_template('categories/show.html', category=category)

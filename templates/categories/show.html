@@ -3,19 +3,12 @@
 {% block content %}
   <h1>Category: {{ category.name }}</h1>
   <p>Description: {{ category.description }}</p>
-  <hr />
 
   <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
-    <p>View Category Items</p>
+    <p>View {{ category.name }} Items</p>
   </a>
 
   <hr />
-
-  <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
-    <p>Edit</p>
-  </a>
-
-  <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
-    <p>Delete</p>
-  </a>
+  <p id='categoryErrorMessages'></p>
+  <div id='categoryDelete'></div>
 {% endblock %}

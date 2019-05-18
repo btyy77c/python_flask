@@ -51,7 +51,7 @@ class CategoryModel:
             self.errors = 'Id required to delete from database'
             return self
         else:
-            db_object = session.query(database_table).filter_by(id = self.id).one()
+            db_object = session.query(self.database_table).filter_by(id = self.id).one()
             session.delete(db_object)
             return self.__update_database(session)
 
@@ -79,5 +79,8 @@ class CategoryModel:
     @classmethod
     def find(cls, session, name):
         database_table = CategoryTable
-        db_object = session.query(database_table).filter_by(name = name).one()
-        return cls(db_object.serialize())
+        try:
+            db_object = session.query(database_table).filter_by(name = name).one()
+            return cls(db_object.serialize())
+        except:
+            cls({ 'errors': 'Category Not Found' })

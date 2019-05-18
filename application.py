@@ -21,9 +21,12 @@ def CategoryIndex():
     else:
         return CategoriesController().index()
 
-@app.route('/category/<name>')
+@app.route('/category/<name>', methods=['GET', 'DELETE'])
 def CategoryShow(name):
-    return CategoriesController().show(name)
+    if request.method == 'DELETE':
+        return CategoriesController().delete(name)
+    else:
+        return CategoriesController().show(name)
 
 @app.route('/category/<name>/items')
 def ItemIndex(name):
