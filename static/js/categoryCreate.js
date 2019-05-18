@@ -1,17 +1,10 @@
-const formErrorMessageId = 'formErrorMessage'
+import ErrorTag from './errorTag.js'
 
 const addButton = (div, label) => {
   const button = document.createElement('button')
   button.innerHTML = label
   div.appendChild(button)
   return button
-}
-
-const addErrorTag = (form) => {
-  const p = document.createElement('p')
-  p.id = formErrorMessageId
-  form.appendChild(p)
-  return p
 }
 
 const addFormFields = (form) => {
@@ -52,11 +45,11 @@ const submitForm = (form) => {
       if (json.errors == undefined) {
         location.reload()
       } else {
-        changeErrorMessage(`${json.errors} X`)
+        ErrorTag.changeErrorMessage(`${json.errors} X`)
       }
     })
   }).catch(err => {
-    changeErrorMessage('Failed to create category X')
+    ErrorTag.changeErrorMessage('Failed to create category X')
   })
 }
 
@@ -64,6 +57,8 @@ export default {
   load() {
     let div = document.getElementById('createCategory')
     if (div == null) { return }
+
+    ErrorTag.load('createCategoryErrors')
 
     let form = document.createElement('form')
     div.appendChild(form)
@@ -73,11 +68,6 @@ export default {
     addButton(form, 'Create Category').addEventListener('click', (e) => {
       e.preventDefault()
       submitForm(form)
-    })
-
-    addErrorTag(form).addEventListener('click', (e) => {
-      e.preventDefault()
-      changeErrorMessage('')
     })
   }
 }

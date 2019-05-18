@@ -1,7 +1,10 @@
-let errorTag = null
+import ErrorTag from './errorTag.js'
 
-const changeErrorMessage = (message) => {
-  errorTag.innerHTML = message
+const createButton = (div) => {
+  const button = document.createElement('button')
+  button.innerHTML = 'Delete'
+  div.appendChild(button)
+  return button
 }
 
 const deleteCategory = (path) => {
@@ -15,10 +18,10 @@ const deleteCategory = (path) => {
       if (json.errors == undefined) {
         window.location.replace('/')
       } else {
-        changeErrorMessage(`${json.errors} X`)
+         ErrorTag.changeErrorMessage(`${json.errors} X`)
       }
     }).catch(err => {
-      changeErrorMessage('Failed to delete category X')
+      ErrorTag.changeErrorMessage('Failed to delete category X')
     })
   })
 }
@@ -29,20 +32,11 @@ export default {
     if (div == null) { return }
     const path = location.pathname
 
-    const button = document.createElement('button')
-    button.innerHTML = 'Delete'
-
-    div.appendChild(button)
-
-    button.addEventListener('click', (e) => {
+    createButton(div).addEventListener('click', (e) => {
       e.preventDefault()
       deleteCategory(path)
     })
 
-    errorTag = document.getElementById('categoryErrorMessages')
-    errorTag.addEventListener('click', (e) => {
-      e.preventDefault()
-      changeErrorMessage('')
-    })
+    ErrorTag.load('categoryErrorMessages')
   }
 }

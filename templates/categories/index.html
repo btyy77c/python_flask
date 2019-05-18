@@ -3,6 +3,7 @@
 {% block content %}
   <h2>Categories ({{ categories.__len__() }})</h2>
   <div id='createCategory'></div>
+  <p id='createCategoryErrors'></p>
 
   {% for category in categories %}
     <a href='{{ url_for('CategoryShow', name=category.name) | replace('%20', '%2D') }}'>
