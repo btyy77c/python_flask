@@ -1,5 +1,5 @@
-import categoryForm from './categoryForm.js'
+import categoryCreate from './categoryCreate.js'
 
 document.addEventListener("DOMContentLoaded", function() {
-  categoryForm.createNewCategory()
+  categoryCreate.createNewCategory()
 })

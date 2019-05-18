@@ -27,6 +27,5 @@ class CategoriesController:
         return render_template('categories/index.html', categories=categories)
 
     def show(self, category_name):
-        # Find by category_name
-        # Find items related to category
-        return render_template('categories/show.html', name=category_name)
+        category = CategoryModel.find(self.db_session, category_name)
+        return render_template('categories/show.html', category=category)

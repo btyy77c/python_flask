@@ -25,7 +25,7 @@ def CategoryIndex():
 def CategoryShow(name):
     return CategoriesController().show(name)
 
-@app.route('/items')
+@app.route('/category/<name>/items')
 def ItemIndex(name):
     return ItemsController().index(name)
 

@@ -75,3 +75,9 @@ class CategoryModel:
         for db_object in db_objects:
             objects.append(cls(db_object.serialize()))
         return objects
+
+    @classmethod
+    def find(cls, session, name):
+        database_table = CategoryTable
+        db_object = session.query(database_table).filter_by(name = name).one()
+        return cls(db_object.serialize())

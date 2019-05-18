@@ -1,7 +1,21 @@
 {% extends 'layout/index.html' %}
 
 {% block content %}
-  <h1>Category Show Page {{ name }}</h1>
+  <h1>Category: {{ category.name }}</h1>
+  <p>Description: {{ category.description }}</p>
+  <hr />
 
-  <h2>Items for {{ name }}</h2>
+  <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
+    <p>View Category Items</p>
+  </a>
+
+  <hr />
+
+  <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
+    <p>Edit</p>
+  </a>
+
+  <a href='{{ url_for('ItemIndex', name=category.name) | replace('%20', '%2D') }}'>
+    <p>Delete</p>
+  </a>
 {% endblock %}
