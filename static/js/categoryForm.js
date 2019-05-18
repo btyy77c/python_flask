@@ -17,7 +17,15 @@ const addInput = (div, label, name, value, placeholder) => {
 }
 
 const submitForm = (form) => {
-  console.log(form.name.value)
+  fetch('/categories', {
+    method: 'POST',
+    body: JSON.stringify({ name: form.name.value }),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }).then(response => {
+    response.json().then(json => { console.log(json) })
+  }).catch(err => { console.log(err) })
 }
 
 export default {
