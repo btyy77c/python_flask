@@ -1,3 +1,6 @@
-body {
-  margin: 15px 20px;
+#formErrorMessage {
+  color: red;
+  cursor: pointer;
+  font-size: 0.7em;
+  font-style: italic;
 }

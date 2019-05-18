@@ -47,7 +47,10 @@ class CategoryModel:
     @classmethod
     def all(cls, session):
         database_table = CategoryTable
-        db_categories = session.query(database_table).all()
+        db_categories = session.query(database_table).order_by(
+            database_table.created_date.desc()
+        ).all()
+
         categories = []
         for db_category in db_categories:
             categories.append(cls.init_from_db(db_category))
