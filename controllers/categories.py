@@ -12,8 +12,8 @@ class CategoriesController:
     def __init__(self):
         self.db_session = Session()
 
-    def create(self, values_hash):
-        category = CategoryModel(values_hash).create(self.db_session)
+    def create(self, form_data):
+        category = CategoryModel(form_data).create(self.db_session)
         return jsonify(category.attributes())
 
     def delete(self, name):
@@ -25,6 +25,13 @@ class CategoriesController:
         latest_items = ItemModel.latest(self.db_session)
         return render_template('categories/index.html', categories=categories)
 
-    def show(self, name):
+    def show(self, name, headers):
         category = CategoryModel.find(self.db_session, name)
-        return render_template('categories/show.html', category=category)
+        if headers == 'application/json':
+            return jsonify(category.attributes())
+        else:
+            return render_template('categories/show.html', category=category)
+
+    def update(self, form_data):
+        category = CategoryModel(form_data).update(self.db_session)
+        return jsonify(category.attributes())

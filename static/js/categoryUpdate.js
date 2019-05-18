@@ -1,27 +1,17 @@
 import ErrorTag from './errorTag.js'
+import FormHelpers from './FormHelpers.js'
 
-const addButton = (div, label) => {
-  const button = document.createElement('button')
-  button.innerHTML = label
-  div.appendChild(button)
-  return button
+let form = null
+
+const addForm = (div) => {
+  form = document.createElement('form')
+  form.innerHTML = 'helllo!!!'
+  div.appendChild(form)
 }
 
-const addFormFields = form => {
-  const input = document.createElement('input')
-  input.type = 'text'
-  input.setAttribute('aria-label', 'Category Name')
-  input.name = 'name'
-  input.value = null
-  input.placeholder = 'Category Name'
-  form.appendChild(input)
-
-  const textArea = document.createElement('textarea')
-  textArea.setAttribute('aria-label', 'Category Description')
-  textArea.placeholder = 'Category Description'
-  textArea.name = 'description'
-  textArea.value = null
-  form.appendChild(textArea)
+const removeForm = () => {
+  form.parentNode.removeChild(form)
+  form = null
 }
 
 export default {
@@ -31,14 +21,13 @@ export default {
     if (div == null) { return }
 
     const path = location.pathname
-    const form = document.createElement('form')
-    div.appendChild(form)
 
-    addFormFields(form)
-
-    addButton(form, 'Update Category').addEventListener('click', (e) => {
-      e.preventDefault()
-      console.log('hello!')
+    FormHelpers.createButton(div, 'Edit Form').addEventListener('click', (e) => {
+      if (form == null) {
+        addForm(div)
+      } else {
+        removeForm()
+      }
     })
 
     ErrorTag.load('categoryErrorMessages')

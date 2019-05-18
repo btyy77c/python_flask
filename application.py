@@ -25,8 +25,11 @@ def CategoryIndex():
 def CategoryShow(name):
     if request.method == 'DELETE':
         return CategoriesController().delete(name)
+    elif request.method == 'PUT':
+        form = request.get_json()
+        return CategoriesController().update(form)
     else:
-        return CategoriesController().show(name)
+        return CategoriesController().show(name, request.headers.get('Content-Type', ''))
 
 @app.route('/category/<name>/items')
 def ItemIndex(name):

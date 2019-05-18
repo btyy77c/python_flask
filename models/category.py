@@ -30,6 +30,7 @@ class CategoryModel:
         return {
             'created_by': self.created_by,
             'created_date': self.created_date,
+            'description': self.description,
             'errors': self.errors,
             'id': self.id,
             'name': self.name,
@@ -62,7 +63,9 @@ class CategoryModel:
             return self.create(session)
         else:
             db_object = session.query(self.database_table).filter_by(id = self.id).one()
-            db_object.update(self.attributes())
+            self.updated_date = datetime.datetime.now()
+            new_values = { k: v for k, v in self.attributes().items() if v is not None }
+            db_object.update(new_values)
             return self.__update_database(session)
 
     @classmethod

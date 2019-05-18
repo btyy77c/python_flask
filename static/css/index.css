@@ -7,7 +7,6 @@
 }
 
 #createCategory form {
-  border-bottom: 1px solid #ccc;
   display: grid;
   grid-template-columns: 25% 50% 15%;
   justify-content: space-between;

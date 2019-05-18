@@ -1,11 +1,5 @@
 import ErrorTag from './errorTag.js'
-
-const addButton = (div, label) => {
-  const button = document.createElement('button')
-  button.innerHTML = label
-  div.appendChild(button)
-  return button
-}
+import FormHelpers from './FormHelpers.js'
 
 const addFormFields = (form) => {
   const input = document.createElement('input')
@@ -65,8 +59,7 @@ export default {
 
     addFormFields(form)
 
-    addButton(form, 'Create Category').addEventListener('click', (e) => {
-      e.preventDefault()
+    FormHelpers.createButton(div, 'Create Category').addEventListener('click', (e) => {
       submitForm(form)
     })
   }

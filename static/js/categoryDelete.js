@@ -1,11 +1,5 @@
 import ErrorTag from './errorTag.js'
-
-const createButton = (div) => {
-  const button = document.createElement('button')
-  button.innerHTML = 'Delete'
-  div.appendChild(button)
-  return button
-}
+import FormHelpers from './FormHelpers.js'
 
 const deleteCategory = (path) => {
   fetch(path, {
@@ -32,8 +26,7 @@ export default {
     if (div == null) { return }
     const path = location.pathname
 
-    createButton(div).addEventListener('click', (e) => {
-      e.preventDefault()
+    FormHelpers.createButton(div, 'Delete').addEventListener('click', (e) => {
       deleteCategory(path)
     })
 
