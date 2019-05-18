@@ -35,24 +35,33 @@ class CategoryModel:
             'updated_date': self.updated_date
         }
 
-    def delete(self, session):
-        db_object = session.query(database_table).filter_by(id = self.id).one()
-        session.delete(db_object)
-        return self.__update_database(session)
-
-    def save(self, session):
+    def create(self, session):
         if self.id == None:
-            db_object = self.database_table(
-                name = self.name,
-                description = self.description,
-                created_by = self.created_by
-            )
+            db_object = self.database_table(created_by = self.created_by,
+                description = self.description, name = self.name)
             session.add(db_object)
+            self.__update_database(session)
+            self.id = db_object.id
+            return self
+        else:
+            return self.update(session)
+
+    def delete(self, session):
+        if self.id == None:
+            self.errors = 'Id required to delete from database'
+            return self
+        else:
+            db_object = session.query(database_table).filter_by(id = self.id).one()
+            session.delete(db_object)
+            return self.__update_database(session)
+
+    def update(self, session):
+        if self.id == None:
+            return self.create(session)
         else:
             db_object = session.query(self.database_table).filter_by(id = self.id).one()
             db_object.update(self.attributes())
-
-        return self.__update_database(session)
+            return self.__update_database(session)
 
     @classmethod
     def all(cls, session):
