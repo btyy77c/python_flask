@@ -1,26 +1,16 @@
 import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
 
-const addFormFields = (form) => {
-  const input = document.createElement('input')
-  input.type = 'text'
-  input.setAttribute('aria-label', 'Category Name')
-  input.name = 'name'
-  input.value = null
-  input.placeholder = 'Category Name'
-  form.appendChild(input)
+const createForm = (div) => {
+  let form = document.createElement('form')
+  FormHelpers.createInputField(form, 'name', 'Category Name')
+  FormHelpers.createTextArea(form, 'description', 'Category Description')
+  div.appendChild(form)
 
-  const textArea = document.createElement('textarea')
-  textArea.setAttribute('aria-label', 'Category Description')
-  textArea.placeholder = 'Category Description'
-  textArea.name = 'description'
-  textArea.value = null
-  form.appendChild(textArea)
-}
-
-const changeErrorMessage = (message) => {
-  const p = document.getElementById(formErrorMessageId)
-  p.innerHTML = message
+  FormHelpers.createButton(div, 'Create Category').addEventListener('click', (e) => {
+    e.preventDefault()
+    submitForm(form)
+  })
 }
 
 const submitForm = (form) => {
@@ -53,14 +43,6 @@ export default {
     if (div == null) { return }
 
     ErrorTag.load('createCategoryErrors')
-
-    let form = document.createElement('form')
-    div.appendChild(form)
-
-    addFormFields(form)
-
-    FormHelpers.createButton(div, 'Create Category').addEventListener('click', (e) => {
-      submitForm(form)
-    })
+    createForm(div)
   }
 }

@@ -27,6 +27,7 @@ export default {
     const path = location.pathname
 
     FormHelpers.createButton(div, 'Delete').addEventListener('click', (e) => {
+      e.preventDefault()
       deleteCategory(path)
     })
 
