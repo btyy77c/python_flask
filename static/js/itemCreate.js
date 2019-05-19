@@ -1,27 +1,30 @@
 import ErrorTag from './errorTag.js'
-import FormHelpers from './FormHelpers.js'
+import LocaleFetchCall from './localeFetchCall.js'
 
 let firebaseUser = null
 
-const createForm = (div) => {
-  const form = document.createElement('form')
-  FormHelpers.createInputField(form, 'title', 'Item Title')
-  FormHelpers.createTextArea(form, 'description', 'Item Description')
-  div.appendChild(form)
-  console.log(div)
-}
-
 export default {
-  load(user) {
+  load() {
+    const div = document.getElementById('createItem')
+    if (div == null) { return }
+
+    ErrorTag.load('itemErrors')
+    const form = document.querySelector('#createItem form')
+    document.querySelector('#createItem form button').addEventListener('click', (e) => {
+      e.preventDefault()
+      console.log('clicked!!')
+    })
+  },
+
+  updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('createItem')
     if (div == null) { return }
 
-    //div.innerHTML = ''
-
-    //if (firebaseUser) {
-    //  createForm(div)
-    //  ErrorTag.load('itemErrors')
-    //}
+    if (firebaseUser) {
+      div.classList.remove('hidden')
+    } else {
+      div.classList.add('hidden')
+    }
   }
 }

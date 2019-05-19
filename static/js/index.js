@@ -14,17 +14,21 @@ firebase.auth().onAuthStateChanged(user => {
   // Update user login button
   user ? User.logout(user) : User.login(provider)
 
-  // Update category forms
+  // Update User on each form
   CategoryCreate.updateUser(user)
   CategoryDelete.updateUser(user)
   CategoryUpdate.updateUser(user)
 
   // Update item forms
-  // ItemCreate.load(user)
+  ItemCreate.updateUser(user)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Load Category Forms
   CategoryCreate.load()
   CategoryDelete.load()
   CategoryUpdate.load()
+
+  // Load Item Forms
+  ItemCreate.load()
 })

@@ -40,6 +40,11 @@ def ItemIndex(name):
 def ItemShow(name):
     return ItemsController().show(name)
 
+@app.route('/items', methods=['POST'])
+def ItemCreate():
+    form = request.get_json()
+    return ItemsController().create(form)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=8000)

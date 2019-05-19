@@ -28,14 +28,22 @@
 
   <div class='catgeory-index-header'>
     <h2>Latest Items!</h2>
-    <div id='createItem'>
+    <div id='createItem' class='hidden'>
       <form>
-        <input type='text' aria-label="Item Title" name="title" placeholder="Item Title">
-        <textarea aria-label="Item Description" placeholder="Item Description" name="description">
-        </textarea>
+        <input type="text" aria-label="Item Title" name="title" placeholder="Item Title">
+
+        <textarea aria-label="Item Description" name="description" placeholder="Item Description"></textarea>
+
+        <select>
+          {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        <select>
+
+        <button>Create Item</button>
       </form>
+      <p id='itemErrors'></p>
     </div>
-    <p id='itemErrors'></p>
   </div>
 
   <div class='catgeory-index-list'>
