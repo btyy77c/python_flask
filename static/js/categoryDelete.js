@@ -1,22 +1,16 @@
 import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
+import LocaleFetchCall from './localeFetchCall.js'
 
 const deleteCategory = (path) => {
-  fetch(path, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
+  LocaleFetchCall.fetchCall(path, 'DELETE', null).then(category => {
+    if (category.errors == undefined) {
+      window.location.replace('/')
+    } else {
+      ErrorTag.changeErrorMessage(`${json.errors} X`)
     }
-  }).then(response => {
-    response.json().then(json => {
-      if (json.errors == undefined) {
-        window.location.replace('/')
-      } else {
-         ErrorTag.changeErrorMessage(`${json.errors} X`)
-      }
-    }).catch(err => {
-      ErrorTag.changeErrorMessage('Failed to delete category X')
-    })
+  }).catch(err => {
+    ErrorTag.changeErrorMessage('Failed to delete category X')
   })
 }
 

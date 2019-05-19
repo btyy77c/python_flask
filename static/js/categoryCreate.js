@@ -1,5 +1,6 @@
 import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
+import LocaleFetchCall from './localeFetchCall.js'
 
 const createForm = (div) => {
   let form = document.createElement('form')
@@ -14,24 +15,18 @@ const createForm = (div) => {
 }
 
 const submitForm = (form) => {
-  fetch('/categories', {
-    method: 'POST',
-    body: JSON.stringify({
-      created_by: 'A Fake User',
-      description: form.description.value,
-      name: form.name.value
-    }),
-    headers: {
-      'Content-Type': 'application/json',
+  const body = JSON.stringify({
+    created_by: 'A Fake User',
+    description: form.description.value,
+    name: form.name.value
+  })
+
+  LocaleFetchCall.fetchCall('/categories', 'POST', body).then(category => {
+    if (category.errors == undefined) {
+      location.reload()
+    } else {
+      ErrorTag.changeErrorMessage(`${json.errors} X`)
     }
-  }).then(response => {
-    response.json().then(json => {
-      if (json.errors == undefined) {
-        location.reload()
-      } else {
-        ErrorTag.changeErrorMessage(`${json.errors} X`)
-      }
-    })
   }).catch(err => {
     ErrorTag.changeErrorMessage('Failed to create category X')
   })

@@ -1,5 +1,6 @@
 import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
+import LocaleFetchCall from './localeFetchCall.js'
 
 let form = null
 
@@ -24,15 +25,8 @@ const addForm = (div, path) => {
 }
 
 const getCategoryId = (path) => {
-  return fetch(path, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  }).then(response => {
-    return response.json().then(body => {
-      return body
-    })
+  return LocaleFetchCall.fetchCall(path, 'GET', null).then(response => {
+    return response
   })
 }
 
@@ -42,25 +36,19 @@ const removeForm = () => {
 }
 
 const submitForm = (form, path, id) => {
-  fetch(path, {
-    method: 'PUT',
-    body: JSON.stringify({
-      created_by: 'A Fake User',
-      description: form.description.value,
-      id: id,
-      name: form.name.value
-    }),
-    headers: {
-      'Content-Type': 'application/json',
+  const body = JSON.stringify({
+    created_by: 'A Fake User',
+    description: form.description.value,
+    id: id,
+    name: form.name.value
+  })
+
+  LocaleFetchCall.fetchCall(path, 'PUT', body).then(category => {
+    if (category.errors == undefined) {
+      window.location.replace(`/category/${category.name}`)
+    } else {
+      ErrorTag.changeErrorMessage(`${category.errors} X`)
     }
-  }).then(response => {
-    response.json().then(json => {
-      if (json.errors == undefined) {
-        window.location.replace(`/category/${json.name}`)
-      } else {
-        ErrorTag.changeErrorMessage(`${json.errors} X`)
-      }
-    })
   }).catch(err => {
     ErrorTag.changeErrorMessage('Failed to update category X')
   })
