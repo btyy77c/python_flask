@@ -3,6 +3,7 @@ from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../models')))
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
+from category import CategoryModel
 from flask import render_template, jsonify
 from item import ItemModel
 from session import Session
@@ -19,8 +20,9 @@ class ItemsController:
         return jsonify(item.attributes())
 
     def index(self, category_name):
-        # items = ItemModel.all(self.db_session).filter_by(category_name)
-        return render_template('items/index.html', category_name=category_name)
+        category = CategoryModel.find(self.db_session, category_name)
+        items = ItemModel.category_group(self.db_session, category.id)
+        return render_template('items/index.html', category=category, items=items)
 
     def show(self, item_name):
         return render_template('items/show.html', name=item_name)

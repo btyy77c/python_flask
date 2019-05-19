@@ -2,7 +2,7 @@ import os, sys
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
-from setup import ItemTable
+from setup import ItemTable, CategoryTable
 
 class ItemModel:
     def __init__(self, values_hash):
@@ -49,6 +49,14 @@ class ItemModel:
             return self
         else:
             return self.update(session)
+
+    @classmethod
+    def category_group(cls, session, category_id):
+        db_items = session.query(ItemTable).filter_by(category_id = category_id)
+        items = []
+        for db_item in db_items:
+            items.append(cls(db_item.serialize()))
+        return items
 
     @classmethod
     def delete_category_group(cls, category_id, session):
