@@ -36,9 +36,13 @@ def CategoryShow(name):
 def ItemIndex(name):
     return ItemsController().index(name)
 
-@app.route('/item/<title>')
+@app.route('/item/<title>', methods=['GET', 'DELETE', 'PUT'])
 def ItemShow(title):
-    return ItemsController().show(title, request.headers.get('Content-Type', ''))
+    if request.method == 'DELETE':
+        form = request.get_json()
+        return ItemsController().delete(title, form)
+    else:
+        return ItemsController().show(title, request.headers.get('Content-Type', ''))
 
 @app.route('/items', methods=['POST'])
 def ItemCreate():

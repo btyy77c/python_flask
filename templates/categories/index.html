@@ -49,7 +49,7 @@
   <div class='catgeory-index-list'>
     {% for item in items %}
       <h3>{{ item.title }}</h3>
-      <a href="{{ url_for('ItemShow', name=item.title) }}">
+      <a href="{{ url_for('ItemShow', title=item.title) }}">
         <p>View Item</p>
       </a>
     {% endfor %}

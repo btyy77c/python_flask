@@ -19,6 +19,11 @@ class ItemsController:
         item = ItemModel(form).create(self.db_session)
         return jsonify(item.attributes())
 
+    def delete(self, title, form_data):
+        user = UserModel(form_data['user_token'])
+        item = ItemModel({ 'title': title, 'created_by': user.email }).delete(self.db_session)
+        return jsonify(item.attributes())
+
     def index(self, category_name):
         category = CategoryModel.find(self.db_session, category_name)
         items = ItemModel.category_group(self.db_session, category.id)

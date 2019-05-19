@@ -50,6 +50,16 @@ class ItemModel:
         else:
             return self.update(session)
 
+    def delete(self, session):
+        db_object = session.query(ItemTable).filter_by(title = self.title).one()
+
+        if self.created_by == db_object.created_by:
+            session.delete(db_object)
+            return self.update_database(session)
+        else:
+            self.errors = 'Only ' + db_object.created_by + ' can delete'
+            return self
+
     @classmethod
     def category_group(cls, session, category_id):
         db_items = session.query(ItemTable).filter_by(category_id = category_id)
