@@ -37,5 +37,7 @@ class CategoriesController:
             return render_template('categories/show.html', category=category)
 
     def update(self, form_data):
+        user = UserModel(form_data['user_token'])
+        form_data['created_by'] = user.email
         category = CategoryModel(form_data).update(self.db_session)
         return jsonify(category.attributes())

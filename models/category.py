@@ -53,16 +53,22 @@ class CategoryModel:
             ItemModel.delete_category_group(db_object.id, session)
             return self.__update_database(session)
         else:
-            self.errors = 'Only ' + db_object.created_by + ' can delet this category'
+            self.errors = 'Only ' + db_object.created_by + ' can delete'
             return self
 
     def update(self, session):
+        db_objects = session.query(self.database_table).filter_by(id = self.id)
+        db_object = db_objects.one()
+
         if self.id == None:
             return self.create(session)
+        elif db_object.created_by != self.created_by:
+            self.errors = 'Only ' + db_object.created_by + ' can update'
+            return self
         else:
             self.updated_date = datetime.datetime.now()
             new_values = { k: v for k, v in self.attributes().items() if v is not None }
-            session.query(self.database_table).filter_by(id = self.id).update(new_values)
+            db_objects.update(new_values)
             return self.__update_database(session)
 
     @classmethod

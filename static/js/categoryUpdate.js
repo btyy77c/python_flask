@@ -2,6 +2,7 @@ import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+let firebaseUser = null
 let form = null
 
 const addForm = (div, path) => {
@@ -33,34 +34,40 @@ const removeForm = () => {
 }
 
 const submitForm = (form, path, id) => {
-  const body = JSON.stringify({
-    created_by: 'A Fake User',
-    id: id,
-    name: form.name.value
-  })
+  firebaseUser.getIdToken(true).then(token => {
+    const body = JSON.stringify({
+      id: id,
+      name: form.name.value,
+      user_token: token
+    })
 
-  LocaleFetchCall.fetchCall(path, 'PUT', body).then(category => {
-    if (category.errors == undefined) {
-      window.location.replace(`/category/${category.name}`)
-    } else {
-      ErrorTag.changeErrorMessage(`${category.errors} X`)
-    }
-  }).catch(err => {
-    ErrorTag.changeErrorMessage('Failed to update category X')
+    LocaleFetchCall.fetchCall(path, 'PUT', body).then(category => {
+      if (category.errors == undefined) {
+        window.location.replace(`/category/${category.name}`)
+      } else {
+        ErrorTag.changeErrorMessage(`${category.errors} X`)
+      }
+    }).catch(err => {
+      ErrorTag.changeErrorMessage('Failed to update category X')
+    })
   })
 }
 
 export default {
-  load() {
+  load(user) {
+    firebaseUser = user
     const div = document.getElementById('categoryEdit')
     if (div == null) { return }
 
+    div.innerHTML = ''
     const path = location.pathname
 
-    FormHelpers.createButton(div, 'Edit Form').addEventListener('click', (e) => {
-      (form == null) ? addForm(div, path) : removeForm()
-    })
+    if (firebaseUser) {
+      FormHelpers.createButton(div, 'Edit Form').addEventListener('click', (e) => {
+        (form == null) ? addForm(div, path) : removeForm()
+      })
 
-    ErrorTag.load('categoryErrorMessages')
+      ErrorTag.load('categoryErrorMessages')
+    }
   }
 }
