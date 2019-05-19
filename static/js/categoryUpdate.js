@@ -10,9 +10,6 @@ const addForm = (div, path) => {
     const input = FormHelpers.createInputField(form, 'name', 'Category Name')
     input.value = category.name
 
-    const textArea = FormHelpers.createTextArea(form, 'description', 'Category Description')
-    textArea.value = category.description
-
     const id = category.id
 
     div.appendChild(form)
@@ -38,7 +35,6 @@ const removeForm = () => {
 const submitForm = (form, path, id) => {
   const body = JSON.stringify({
     created_by: 'A Fake User',
-    description: form.description.value,
     id: id,
     name: form.name.value
   })

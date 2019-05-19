@@ -11,7 +11,6 @@ class CategoryModel:
         self.created_by = values_hash.get('created_by', None)
         self.created_date = values_hash.get('created_date', None)
         self.database_table = CategoryTable
-        self.description = values_hash.get('description', None)
         self.errors = values_hash.get('errors', None)
         self.id = values_hash.get('id', None)
         self.name = values_hash.get('name', None)
@@ -30,7 +29,6 @@ class CategoryModel:
         return {
             'created_by': self.created_by,
             'created_date': self.created_date,
-            'description': self.description,
             'errors': self.errors,
             'id': self.id,
             'name': self.name,
@@ -39,8 +37,7 @@ class CategoryModel:
 
     def create(self, session):
         if self.id == None:
-            db_object = self.database_table(created_by = self.created_by,
-                description = self.description, name = self.name)
+            db_object = self.database_table(created_by = self.created_by, name = self.name)
             session.add(db_object)
             self.__update_database(session)
             self.id = db_object.id

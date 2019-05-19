@@ -13,7 +13,6 @@ const addLoginMessage = (div) => {
 const createForm = (div) => {
   let form = document.createElement('form')
   FormHelpers.createInputField(form, 'name', 'Category Name')
-  FormHelpers.createTextArea(form, 'description', 'Category Description')
   div.appendChild(form)
 
   FormHelpers.createButton(div, 'Create Category').addEventListener('click', (e) => {
@@ -26,7 +25,6 @@ const submitForm = (form) => {
   firebaseUser.getIdToken(true).then(token => {
     const body = JSON.stringify({
       user_token: token,
-      description: form.description.value,
       name: form.name.value
     })
 

@@ -10,7 +10,6 @@ class CategoryTable(Base):
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
-    description = Column(String(250), nullable=False, default='')
     created_by = Column(String(250), nullable=False)
     name = Column(String(250), nullable=False, unique=True)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
@@ -20,7 +19,6 @@ class CategoryTable(Base):
         return {
             'created_by': self.created_by,
             'created_date': self.created_date,
-            'description': self.description,
             'id': self.id,
             'name': self.name,
             'updated_date': self.updated_date
@@ -33,7 +31,7 @@ class ItemTable(Base):
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(CategoryTable)
-    description = Column(Text)
+    description = Column(String(250), nullable=False, default='')
     title = Column(String(250), nullable=False)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
