@@ -41,7 +41,8 @@ nav a {
 
 #createCategoryErrors,
 #deleteErrors,
-#editErrors {
+#editErrors,
+#itemErrors {
   color: #141B41;
   cursor: pointer;
   font-size: 0.7em;

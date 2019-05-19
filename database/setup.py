@@ -34,7 +34,7 @@ class ItemTable(Base):
     created_by = Column(String(250), nullable=False)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     description = Column(String(250), nullable=False, default='')
-    title = Column(String(250), nullable=False)
+    title = Column(String(250), nullable=False, unique=True)
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
 
     def serialize(self):

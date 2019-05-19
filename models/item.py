@@ -27,6 +27,29 @@ class ItemModel:
             'updated_date': self.updated_date
         }
 
+    def update_database(self, session):
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            self.errors = 'failed to update database'
+        return self
+
+    def create(self, session):
+        if self.id == None:
+            db_object = ItemTable(
+                category_id = self.category_id,
+                created_by = self.created_by,
+                description = self.description,
+                title = self.title
+            )
+            session.add(db_object)
+            self.update_database(session)
+            self.id = db_object.id
+            return self
+        else:
+            return self.update(session)
+
     @classmethod
     def delete_category_group(cls, category_id, session):
         db_items = session.query(ItemTable).filter_by(category_id = category_id)
@@ -40,5 +63,5 @@ class ItemModel:
         db_items = session.query(ItemTable).order_by(ItemTable.created_date.desc()).limit(10)
         items = []
         for db_item in db_items:
-            items.append(cls(db_item.id, db_item.category_id, db_item.description, db_item.title))
+            items.append(cls(db_item.serialize()))
         return items
