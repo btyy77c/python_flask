@@ -1,22 +1,23 @@
 {% extends 'layout/index.html' %}
 
 {% block content %}
-  <h2>Categories ({{ categories.__len__() }})</h2>
-  <div id='createCategory'></div>
-  <p id='createCategoryErrors'></p>
-  <hr />
+  <div class='catgeory-index-header'>
+    <h2>Categories ({{ categories.__len__() }})</h2>
+    <div id='createCategory'></div>
+    <p id='createCategoryErrors'></p>
+  </div>
 
-  {% for category in categories %}
-    <h3>{{ category.name }}:</h3>
-    <a href="{{ url_for('CategoryShow', name=category.name) }}">
-      <p>View Category</p>
-    </a>
+  <div class='catgeory-index-list'>
+    {% for category in categories %}
+      <h3>{{ category.name }}</h3>
+      <a href="{{ url_for('CategoryShow', name=category.name) }}">
+        <p>View Category</p>
+      </a>
 
-    <a href="{{ url_for('ItemIndex', name=category.name) }}">
-      <p>View Items</p>
-    </a>
-  {% endfor %}
-
-  <hr />
+      <a href="{{ url_for('ItemIndex', name=category.name) }}">
+        <p>View Items</p>
+      </a>
+    {% endfor %}
+  </div>
   <h2>Latest Items TODO!</h2>
 {% endblock %}
