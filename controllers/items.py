@@ -24,5 +24,9 @@ class ItemsController:
         items = ItemModel.category_group(self.db_session, category.id)
         return render_template('items/index.html', category=category, items=items)
 
-    def show(self, item_name):
-        return render_template('items/show.html', name=item_name)
+    def show(self, title, headers):
+        item = ItemModel.find(self.db_session, title)
+        if headers == 'application/json':
+            return jsonify(item.attributes())
+        else:
+            return render_template('items/show.html', item=item)

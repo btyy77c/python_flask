@@ -1,1 +1,8 @@
-<h1>Item {{  name }} Show Page</h1>
+{% extends 'layout/index.html' %}
+
+{% block content %}
+  <h1>Item: {{ item.title }}</h1>
+
+  <h3>Description:</h3>
+  <p>{{ item.description }}</p>
+{% endblock %}

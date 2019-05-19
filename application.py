@@ -36,9 +36,9 @@ def CategoryShow(name):
 def ItemIndex(name):
     return ItemsController().index(name)
 
-@app.route('/item/<name>')
-def ItemShow(name):
-    return ItemsController().show(name)
+@app.route('/item/<title>')
+def ItemShow(title):
+    return ItemsController().show(title, request.headers.get('Content-Type', ''))
 
 @app.route('/items', methods=['POST'])
 def ItemCreate():

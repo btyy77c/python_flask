@@ -2,7 +2,7 @@ import os, sys
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
-from setup import ItemTable, CategoryTable
+from setup import ItemTable
 
 class ItemModel:
     def __init__(self, values_hash):
@@ -65,6 +65,13 @@ class ItemModel:
             session.delete(db_item)
         return db_items
 
+    @classmethod
+    def find(cls, session, title):
+        try:
+            db_object = session.query(ItemTable).filter_by(title = title).one()
+            return cls(db_object.serialize())
+        except:
+            cls({ 'errors': 'Category Not Found' })
 
     @classmethod
     def latest(cls, session):
