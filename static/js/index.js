@@ -1,5 +1,5 @@
 import CategoryCreate from './categoryCreate.js'
-import categoryDelete from './categoryDelete.js'
+import CategoryDelete from './categoryDelete.js'
 import categoryUpdate from './categoryUpdate.js'
 import firebaseConfig from './firebaseConfig.js'
 import User from './user.js'
@@ -11,9 +11,9 @@ const provider = new firebase.auth.GoogleAuthProvider()
 firebase.auth().onAuthStateChanged(user => {
   user ? User.logout() : User.login(provider)
   CategoryCreate.load(user)
+  CategoryDelete.load(user)
 })
 
 document.addEventListener("DOMContentLoaded", function() {
-  // categoryDelete.load()
   // categoryUpdate.load()
 })
