@@ -5,12 +5,27 @@ sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 from setup import ItemTable
 
 class ItemModel:
-    def __init__(self, id, category_id, description, title):
-        self.id = id
-        self.category_id = category_id
-        self.description = description
-        self.title = title
-        self.database_table = ItemTable
+    def __init__(self, values_hash):
+        self.id = values_hash.get('id', None)
+        self.errors = values_hash.get('errors', None)
+        self.category_id = values_hash.get('category_id', None)
+        self.created_by = values_hash.get('created_by', None)
+        self.created_date = values_hash.get('created_date', None)
+        self.description = values_hash.get('description', None)
+        self.title = values_hash.get('title', None)
+        self.updated_date = values_hash.get('updated_date', None)
+
+    def attributes(self):
+        return {
+            'id': self.id,
+            'errors': self.errors,
+            'category_id': self.category_id,
+            'created_by': self.created_by,
+            'created_date': self.created_date,
+            'description': self.description,
+            'title': self.title,
+            'updated_date': self.updated_date
+        }
 
     @classmethod
     def delete_category_group(cls, category_id, session):

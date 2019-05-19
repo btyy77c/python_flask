@@ -31,10 +31,22 @@ class ItemTable(Base):
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(CategoryTable)
+    created_by = Column(String(250), nullable=False)
+    created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     description = Column(String(250), nullable=False, default='')
     title = Column(String(250), nullable=False)
-    created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'category_id': self.category_id,
+            'created_by': self.created_by,
+            'created_date': self.created_date,
+            'description': self.description,
+            'title': self.title,
+            'updated_date': self.updated_date
+        }
 
 
 engine = create_engine('sqlite:///database/catalog.db')

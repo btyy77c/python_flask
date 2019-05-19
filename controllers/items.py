@@ -5,12 +5,17 @@ sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
 from flask import render_template
 
-# from category import ItemModel
+from item import ItemModel
 from session import Session
+from user import UserModel
 
 class ItemsController:
     def __init__(self):
         self.db_session = Session()
+
+    def create(self, form):
+        user = UserModel(form['user_token'])
+        form['created_by'] = user.email
 
     def index(self, category_name):
         # items = ItemModel.all(self.db_session).filter_by(category_name)
