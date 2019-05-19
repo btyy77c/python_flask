@@ -9,19 +9,39 @@
 
 1. Clone application locally
 2. Setup a Firebase Account: https://firebase.google.com/
-3. Add your Firebase credentials to a file located in `static/js/firebaseConfig.js`
+3. Run `sudo pip install firebase-admin` to install python firebase (https://github.com/firebase/firebase-admin-python)
+4. Added your Admin credentials to a file located in `models/creds.json`
+The file should look like:
+```
+{
+  "type": ...,
+  "project_id": ...,
+  "private_key_id": ...,
+  "private_key": ...,
+  "client_email": ...,
+  "client_id": ...,
+  "auth_uri": ...,
+  "token_uri": ...,
+  "auth_provider_x509_cert_url": ...,
+  "client_x509_cert_url": ...
+}
+```
+Once this is setup, the action `firebase_admin.initialize_app(cred)` that is called in the `models/user.py` file should begin working.
+
+5. Add your JavaScript credentials to a file located in `static/js/firebaseConfig.js`
 The file should look like:
 ```
 export default {
-  apiKey: <Your Key>,
-  authDomain: <Your Domain>,
-  databaseURL: <Your Database>,
-  projectId: <Your Project ID>
-  storageBucket: <Your storage>,
-  messagingSenderId: <Your Sender Id>,
-  appId: <Your App ID>
+  apiKey: ...,
+  authDomain: ...,
+  databaseURL: ...,
+  projectId: ...,
+  storageBucket: ...,
+  messagingSenderId: ...,
+  appId: ...
 }
 ```
 Once this is setup, the action `firebase.initializeApp(firebaseConfig)` that is called in the `static/js/index.js` file should begin working.
-4. Run `python application.py` to start your local server
-5. Visit http://localhost:8000/ in a local browser
+
+6. Run `python application.py` to start your local server
+7. Visit http://localhost:8000/ in a local browser

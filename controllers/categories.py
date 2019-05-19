@@ -7,12 +7,15 @@ from category import CategoryModel
 from flask import render_template, jsonify
 from item import ItemModel
 from session import Session
+from user import UserModel
 
 class CategoriesController:
     def __init__(self):
         self.db_session = Session()
 
     def create(self, form_data):
+        user = UserModel(form_data['user_token'])
+        form_data['created_by'] = user.email
         category = CategoryModel(form_data).create(self.db_session)
         return jsonify(category.attributes())
 
