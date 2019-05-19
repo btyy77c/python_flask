@@ -1,42 +1,21 @@
 import ErrorTag from './errorTag.js'
-import FormHelpers from './FormHelpers.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
 let firebaseUser = null
-let form = null
+let path = null
 
-const addForm = (div, path) => {
-  getCategoryId(path).then(category => {
-    form = document.createElement('form')
-    const input = FormHelpers.createInputField(form, 'name', 'Category Name')
-    input.value = category.name
-
-    const id = category.id
-
-    div.appendChild(form)
-
-    FormHelpers.createButton(form, 'Update Category').addEventListener('click', (e) => {
-      e.preventDefault()
-      submitForm(form, path, id)
-    })
-  })
+const hideOrDisplay = (form) => {
+  if (form.classList.contains('hidden')) {
+    form.classList.remove('hidden')
+  } else {
+    form.classList.add('hidden')
+  }
 }
 
-const getCategoryId = (path) => {
-  return LocaleFetchCall.fetchCall(path, 'GET', null).then(response => {
-    return response
-  })
-}
-
-const removeForm = () => {
-  form.parentNode.removeChild(form)
-  form = null
-}
-
-const submitForm = (form, path, id) => {
+const submitForm = (form, path) => {
   firebaseUser.getIdToken(true).then(token => {
     const body = JSON.stringify({
-      id: id,
+      id: form.id.value,
       name: form.name.value,
       user_token: token
     })
@@ -54,20 +33,35 @@ const submitForm = (form, path, id) => {
 }
 
 export default {
-  load(user) {
+  load() {
+    const div = document.getElementById('categoryEdit')
+    if (div == null) { return }
+
+    path = location.pathname
+    ErrorTag.load('editErrors')
+
+    const form = document.querySelector('#categoryEdit form')
+
+    document.querySelector('#editDisplay').addEventListener('click', (e) => {
+      e.preventDefault()
+      if (firebaseUser) { hideOrDisplay(form) }
+    })
+
+    document.querySelector('#categoryEdit form button').addEventListener('click', (e) => {
+      e.preventDefault()
+      if (firebaseUser) { submitForm(form, path) }
+    })
+  },
+
+  updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('categoryEdit')
     if (div == null) { return }
 
-    div.innerHTML = ''
-    const path = location.pathname
-
     if (firebaseUser) {
-      FormHelpers.createButton(div, 'Edit Form').addEventListener('click', (e) => {
-        (form == null) ? addForm(div, path) : removeForm()
-      })
-
-      ErrorTag.load('categoryErrorMessages')
+      div.classList.remove('hidden')
+    } else {
+      div.classList.add('hidden')
     }
   }
 }

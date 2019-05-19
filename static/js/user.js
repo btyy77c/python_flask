@@ -14,11 +14,11 @@ export default {
     })
   },
 
-  logout() {
+  logout(user) {
     const div = userSignInDiv()
     div.innerHTML = ''
 
-    FormHelpers.createButton(div, 'Sign Out').addEventListener('click', (e) => {
+    FormHelpers.createButton(div, `Sign Out ${user.email}`).addEventListener('click', (e) => {
       firebase.auth().signOut()
     })
   }

@@ -1,19 +1,7 @@
 import ErrorTag from './errorTag.js'
-import FormHelpers from './FormHelpers.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
 let firebaseUser = null
-
-const createForm = (div) => {
-  let form = document.createElement('form')
-  FormHelpers.createInputField(form, 'name', 'Category Name')
-  div.appendChild(form)
-
-  FormHelpers.createButton(div, 'Create Category').addEventListener('click', (e) => {
-    e.preventDefault()
-    submitForm(form)
-  })
-}
 
 const submitForm = (form) => {
   firebaseUser.getIdToken(true).then(token => {
@@ -35,16 +23,27 @@ const submitForm = (form) => {
 }
 
 export default {
-  load(user) {
+  load() {
+    const div = document.getElementById('createCategory')
+    if (div == null) { return }
+
+    ErrorTag.load('createCategoryErrors')
+    const form = document.querySelector('#createCategory form')
+    document.querySelector('#createCategory form button').addEventListener('click', (e) => {
+      e.preventDefault()
+      if (firebaseUser) { submitForm(form) }
+    })
+  },
+
+  updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('createCategory')
     if (div == null) { return }
 
-    div.innerHTML = ''
-
     if (firebaseUser) {
-      createForm(div)
-      ErrorTag.load('createCategoryErrors')
+      div.classList.remove('hidden')
+    } else {
+      div.classList.add('hidden')
     }
   }
 }

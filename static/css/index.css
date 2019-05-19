@@ -1,5 +1,5 @@
 a {
-  color: #98B9F2;
+  color: #306BAC;
   text-decoration: none;
 }
 
@@ -9,7 +9,6 @@ body {
 }
 
 body a {
-  color: #306BAC;
   text-decoration: none;
 }
 
@@ -40,43 +39,19 @@ nav a {
   text-decoration: none;
 }
 
-#createCategory {
-  align-items: center;
-  display: grid;
-  grid-template-columns: 80% 15%;
-  justify-content: space-between;
-}
-
-#createCategory input {
-  width: 60vw;
-  padding: 4px;
-}
-
 #createCategoryErrors,
-#categoryErrorMessages {
-  color: red;
+#deleteErrors,
+#editErrors {
+  color: #141B41;
   cursor: pointer;
   font-size: 0.7em;
   font-style: italic;
-}
-
-#createCategory form {
-  display: grid;
-  grid-template-columns: 25% 50% 15%;
-  justify-content: space-between;
 }
 
 #userSignIn {
   text-align: right;
 }
 
-.catgeory-index-header {
-  border-bottom: 1px solid #ccc;
-}
-
-.catgeory-index-list {
-  border-bottom: 1px solid #ccc;
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
-  justify-content: space-between;
+.hidden {
+  display: none;
 }

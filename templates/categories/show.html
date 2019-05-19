@@ -3,12 +3,22 @@
 {% block content %}
   <h1>Category: {{ category.name }}</h1>
 
+  <div id="categoryDelete" class='hidden'>
+    <button>Delete</button>
+    <p id='deleteErrors'></p>
+  </div>
+
+  <div id="categoryEdit" class='hidden'>
+    <button id='editDisplay'>Edit Form</button>
+    <form class='hidden'>
+      <input type="text" aria-label="Category Name" name="name" value='{{ category.name }}'>
+      <input type="hidden" name="id" value='{{ category.id }}'>
+      <button>Update Category</button>
+    </form>
+    <p id='editErrors'></p>
+  </div>
+
   <a href="{{ url_for('ItemIndex', name=category.name) }}">
     <p>View Items</p>
   </a>
-
-  <hr />
-  <p id='categoryErrorMessages'></p>
-  <div id='categoryEdit'></div>
-  <div id='categoryDelete'></div>
 {% endblock %}

@@ -1,15 +1,8 @@
 import ErrorTag from './errorTag.js'
-import FormHelpers from './FormHelpers.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
 let firebaseUser = null
-
-const createButton = (div, path) => {
-  FormHelpers.createButton(div, 'Delete').addEventListener('click', (e) => {
-     e.preventDefault()
-     deleteCategory(path)
-  })
-}
+let path = null
 
 const deleteCategory = (path) => {
   firebaseUser.getIdToken(true).then(token => {
@@ -29,18 +22,28 @@ const deleteCategory = (path) => {
 }
 
 export default {
-  load(user) {
-    firebaseUser = user
-
+  load() {
     const div = document.getElementById('categoryDelete')
     if (div == null) { return }
-    div.innerHTML = ''
 
-    const path = location.pathname
+    path = location.pathname
+    ErrorTag.load('deleteErrors')
+
+    document.querySelector('#categoryDelete button').addEventListener('click', (e) => {
+      e.preventDefault()
+      if (firebaseUser) { deleteCategory(path) }
+    })
+  },
+
+  updateUser(user) {
+    firebaseUser = user
+    const div = document.getElementById('categoryDelete')
+    if (div == null) { return }
 
     if (firebaseUser) {
-      createButton(div, path)
-      ErrorTag.load('categoryErrorMessages')
+      div.classList.remove('hidden')
+    } else {
+      div.classList.add('hidden')
     }
   }
 }
