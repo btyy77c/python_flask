@@ -10,7 +10,7 @@
 1. Clone application locally
 2. Setup a Firebase Account: https://firebase.google.com/
 3. Run `sudo pip install firebase-admin` to install python firebase (https://github.com/firebase/firebase-admin-python)
-4. Added your Admin credentials to a file located in `models/creds.json`
+4. Add your Admin credentials to a file located in `models/creds.json`
 The file should look like:
 ```
 {
