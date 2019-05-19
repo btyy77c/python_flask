@@ -1,1 +1,3 @@
 *.pyc
+
+static/js/firebaseConfig.js
