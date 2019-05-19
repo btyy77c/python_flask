@@ -17,6 +17,13 @@ export default {
     return input
   },
 
+  createPTag(div, text) {
+    const p = document.createElement('p')
+    p.innerHTML = text
+    div.appendChild(text)
+    return p
+  },
+
   createTextArea(form, name, label) {
     const textArea = document.createElement('textarea')
     textArea.setAttribute('aria-label', label)

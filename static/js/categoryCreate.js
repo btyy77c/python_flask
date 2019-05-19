@@ -2,6 +2,12 @@ import ErrorTag from './errorTag.js'
 import FormHelpers from './FormHelpers.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+const addLoginMessage = (div) => {
+  const p = document.createElement('p')
+  p.innerHTML = 'You must sign in before you can create new categories'
+  div.appendChild(p)
+}
+
 const createForm = (div) => {
   let form = document.createElement('form')
   FormHelpers.createInputField(form, 'name', 'Category Name')
@@ -33,11 +39,14 @@ const submitForm = (form) => {
 }
 
 export default {
-  load() {
-    let div = document.getElementById('createCategory')
+  load(user) {
+    const div = document.getElementById('createCategory')
     if (div == null) { return }
 
+    div.innerHTML = ''
+
+    user ? createForm(div) : addLoginMessage(div)
+
     ErrorTag.load('createCategoryErrors')
-    createForm(div)
   }
 }
