@@ -4,12 +4,6 @@ import LocaleFetchCall from './localeFetchCall.js'
 
 let firebaseUser = null
 
-const addLoginMessage = (div) => {
-  const p = document.createElement('p')
-  p.innerHTML = 'You must sign in before you can create new categories'
-  div.appendChild(p)
-}
-
 const createForm = (div) => {
   let form = document.createElement('form')
   FormHelpers.createInputField(form, 'name', 'Category Name')
@@ -32,7 +26,7 @@ const submitForm = (form) => {
       if (category.errors == undefined) {
         location.reload()
       } else {
-        ErrorTag.changeErrorMessage(`${json.errors} X`)
+        ErrorTag.changeErrorMessage(`${category.errors} X`)
       }
     }).catch(err => {
       ErrorTag.changeErrorMessage('Failed to create category X')
@@ -48,8 +42,9 @@ export default {
 
     div.innerHTML = ''
 
-    firebaseUser ? createForm(div) : addLoginMessage(div)
-
-    ErrorTag.load('createCategoryErrors')
+    if (firebaseUser) {
+      createForm(div)
+      ErrorTag.load('createCategoryErrors')
+    }
   }
 }

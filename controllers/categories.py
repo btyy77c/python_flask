@@ -19,8 +19,9 @@ class CategoriesController:
         category = CategoryModel(form_data).create(self.db_session)
         return jsonify(category.attributes())
 
-    def delete(self, name):
-        category = CategoryModel.find(self.db_session, name).delete(self.db_session)
+    def delete(self, name, form_data):
+        user = UserModel(form_data['user_token'])
+        category = CategoryModel({ 'name': name, 'created_by': user.email }).delete(self.db_session)
         return jsonify(category.attributes())
 
     def index(self):

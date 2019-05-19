@@ -46,14 +46,15 @@ class CategoryModel:
             return self.update(session)
 
     def delete(self, session):
-        if self.id == None:
-            self.errors = 'Id required to delete from database'
-            return self
-        else:
-            db_object = session.query(self.database_table).filter_by(id = self.id).one()
+        db_object = session.query(self.database_table).filter_by(name = self.name).one()
+
+        if self.created_by == db_object.created_by:
             session.delete(db_object)
-            ItemModel.delete_category_group(self.id, session)
+            ItemModel.delete_category_group(db_object.id, session)
             return self.__update_database(session)
+        else:
+            self.errors = 'Only ' + db_object.created_by + ' can delet this category'
+            return self
 
     def update(self, session):
         if self.id == None:
