@@ -4,6 +4,7 @@ import CategoryUpdate from './categoryUpdate.js'
 import FirebaseConfig from './firebaseConfig.js'
 import ItemCreate from './itemCreate.js'
 import ItemDelete from './itemDelete.js'
+import ItemUpdate from './itemUpdate.js'
 import User from './user.js'
 
 // Initialize Firebase Authentication
@@ -15,14 +16,13 @@ firebase.auth().onAuthStateChanged(user => {
   // Update user login button
   user ? User.logout(user) : User.login(provider)
 
-  // Update User on each form
+  // Update User on each form, which will allow form submission
   CategoryCreate.updateUser(user)
   CategoryDelete.updateUser(user)
   CategoryUpdate.updateUser(user)
-
-  // Update item forms
   ItemCreate.updateUser(user)
   ItemDelete.updateUser(user)
+  ItemUpdate.updateUser(user)
 })
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,4 +34,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load Item Forms
   ItemCreate.load()
   ItemDelete.load()
+  ItemUpdate.load()
 })
