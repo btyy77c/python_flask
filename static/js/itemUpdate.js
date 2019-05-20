@@ -4,12 +4,6 @@ import LocaleFetchCall from './localeFetchCall.js'
 let firebaseUser = null
 let path = null
 
-const addCategoryDropdown = (form) => {
-  LocaleFetchCall.fetchCall('/categories', 'GET', null).then(categories => {
-    console.log(categories)
-  })
-}
-
 const hideOrDisplay = (form) => {
   if (form.classList.contains('hidden')) {
     form.classList.remove('hidden')
@@ -31,8 +25,6 @@ export default {
     ErrorTag.load('itemErrors')
 
     const form = document.querySelector('#editItem form')
-
-    addCategoryDropdown(form)
 
     document.querySelector('#editDisplay').addEventListener('click', (e) => {
       e.preventDefault()

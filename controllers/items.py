@@ -34,4 +34,5 @@ class ItemsController:
         if headers == 'application/json':
             return jsonify(item.attributes())
         else:
-            return render_template('items/show.html', item=item)
+            categories = CategoryModel.all(self.db_session)
+            return render_template('items/show.html', item=item, categories=categories)

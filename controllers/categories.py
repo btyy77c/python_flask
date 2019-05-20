@@ -24,13 +24,11 @@ class CategoriesController:
         category = CategoryModel({ 'name': name, 'created_by': user.email }).delete(self.db_session)
         return jsonify(category.attributes())
 
-    def index(self, headers):
+    def index(self):
         categories = CategoryModel.all(self.db_session)
-        if headers == 'application/json':
-            return jsonify(CategoryModel.serialized_group(categories))
-        else:
-            items = ItemModel.latest(self.db_session)
-            return render_template('categories/index.html', categories=categories, items=items)
+        items = ItemModel.latest(self.db_session)
+        return render_template('categories/index.html', categories=categories, items=items)
+
 
     def show(self, name, headers):
         category = CategoryModel.find(self.db_session, name)
