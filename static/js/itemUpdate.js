@@ -5,7 +5,9 @@ let firebaseUser = null
 let path = null
 
 const addCategoryDropdown = (form) => {
-  
+  LocaleFetchCall.fetchCall('/categories', 'GET', null).then(categories => {
+    console.log(categories)
+  })
 }
 
 const hideOrDisplay = (form) => {

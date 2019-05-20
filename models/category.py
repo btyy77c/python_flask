@@ -89,3 +89,10 @@ class CategoryModel:
             return cls(db_object.serialize())
         except:
             cls({ 'errors': 'Category Not Found' })
+
+    @classmethod
+    def serialized_group(cls, categories):
+        group = []
+        for category in categories:
+            group.append(category.attributes())
+        return { 'categories': group }

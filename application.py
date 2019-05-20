@@ -11,7 +11,7 @@ from items import ItemsController
 
 @app.route('/')
 def Home():
-    return CategoriesController().index()
+    return CategoriesController().index(request.headers.get('Content-Type', ''))
 
 @app.route('/categories', methods=['GET', 'POST'])
 def CategoryIndex():
@@ -19,7 +19,7 @@ def CategoryIndex():
         form = request.get_json()
         return CategoriesController().create(form)
     else:
-        return CategoriesController().index()
+        return CategoriesController().index(request.headers.get('Content-Type', ''))
 
 @app.route('/category/<name>', methods=['GET', 'DELETE', 'PUT'])
 def CategoryShow(name):
