@@ -41,6 +41,9 @@ def ItemShow(title):
     if request.method == 'DELETE':
         form = request.get_json()
         return ItemsController().delete(title, form)
+    elif request.method == 'PUT':
+        form = request.get_json()
+        return ItemsController().update(form)
     else:
         return ItemsController().show(title, request.headers.get('Content-Type', ''))
 

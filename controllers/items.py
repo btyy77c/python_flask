@@ -36,3 +36,9 @@ class ItemsController:
         else:
             categories = CategoryModel.all(self.db_session)
             return render_template('items/show.html', item=item, categories=categories)
+
+    def update(self, form_data):
+        user = UserModel(form_data['user_token'])
+        form_data['created_by'] = user.email
+        item = ItemModel(form_data).update(self.db_session)
+        return jsonify(item.attributes())

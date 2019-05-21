@@ -9,6 +9,7 @@
   <div id='editItem' class="hidden">
     <button id='editDisplay'>Edit Item</button>
     <form class='hidden'>
+      <input type="hidden" name="id" value='{{ item.id }}'>
       <input type="text" aria-label="Item Title" name="title" placeholder="Item Title"
              value="{{ item.title }}">
 

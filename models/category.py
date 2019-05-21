@@ -15,6 +15,13 @@ class CategoryModel:
         self.name = values_hash.get('name', None)
         self.updated_date = values_hash.get('updated_date', None)
 
+    def __update_database(self, session):
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            self.errors = 'failed to update database'
+        return self
 
     def attributes(self):
         return {
@@ -30,19 +37,11 @@ class CategoryModel:
         if self.id == None:
             db_object = CategoryTable(created_by = self.created_by, name = self.name)
             session.add(db_object)
-            self.update_database(session)
+            self.__update_database(session)
             self.id = db_object.id
             return self
         else:
             return self.update(session)
-
-    def update_database(self, session):
-        try:
-            session.commit()
-        except:
-            session.rollback()
-            self.errors = 'failed to update database'
-        return self
 
     def delete(self, session):
         db_object = session.query(CategoryTable).filter_by(name = self.name).one()
@@ -50,7 +49,7 @@ class CategoryModel:
         if self.created_by == db_object.created_by:
             session.delete(db_object)
             ItemModel.delete_category_group(db_object.id, session)
-            return self.update_database(session)
+            return self.__update_database(session)
         else:
             self.errors = 'Only ' + db_object.created_by + ' can delete'
             return self
@@ -68,7 +67,7 @@ class CategoryModel:
             self.updated_date = datetime.datetime.now()
             new_values = { k: v for k, v in self.attributes().items() if v is not None }
             db_objects.update(new_values)
-            return self.update_database(session)
+            return self.__update_database(session)
 
     @classmethod
     def all(cls, session):

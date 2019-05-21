@@ -13,7 +13,25 @@ const hideOrDisplay = (form) => {
 }
 
 const submitForm = (form, path) => {
+  firebaseUser.getIdToken(true).then(token => {
+    const body = JSON.stringify({
+      user_token: token,
+      category_id: form.category_id.value,
+      description: form.description.value,
+      id: form.id.value,
+      title: form.title.value,
+    })
 
+    LocaleFetchCall.fetchCall(path, 'PUT', body).then(item => {
+      if (item.errors == undefined) {
+        window.location.replace(`/item/${item.title}`)
+      } else {
+        ErrorTag.changeErrorMessage(`${category.errors} X`)
+      }
+    }).catch(err => {
+      ErrorTag.changeErrorMessage('Failed to update category X')
+    })
+  })
 }
 
 export default {

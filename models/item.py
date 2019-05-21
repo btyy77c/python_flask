@@ -2,6 +2,7 @@ import os, sys
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
+import datetime
 from setup import ItemTable
 
 class ItemModel:
@@ -15,6 +16,14 @@ class ItemModel:
         self.title = values_hash.get('title', None)
         self.updated_date = values_hash.get('updated_date', None)
 
+    def __update_database(self, session):
+        try:
+            session.commit()
+        except:
+            session.rollback()
+            self.errors = 'failed to update database'
+        return self
+
     def attributes(self):
         return {
             'id': self.id,
@@ -27,14 +36,6 @@ class ItemModel:
             'updated_date': self.updated_date
         }
 
-    def update_database(self, session):
-        try:
-            session.commit()
-        except:
-            session.rollback()
-            self.errors = 'failed to update database'
-        return self
-
     def create(self, session):
         if self.id == None:
             db_object = ItemTable(
@@ -44,7 +45,7 @@ class ItemModel:
                 title = self.title
             )
             session.add(db_object)
-            self.update_database(session)
+            self.__update_database(session)
             self.id = db_object.id
             return self
         else:
@@ -55,10 +56,25 @@ class ItemModel:
 
         if self.created_by == db_object.created_by:
             session.delete(db_object)
-            return self.update_database(session)
+            return self.__update_database(session)
         else:
             self.errors = 'Only ' + db_object.created_by + ' can delete'
             return self
+
+    def update(self, session):
+        db_objects = session.query(ItemTable).filter_by(id = self.id)
+        db_object = db_objects.one()
+
+        if self.id == None:
+            return self.create(session)
+        elif db_object.created_by != self.created_by:
+            self.errors = 'Only ' + db_object.created_by + ' can update'
+            return self
+        else:
+            self.updated_date = datetime.datetime.now()
+            new_values = { k: v for k, v in self.attributes().items() if v is not None }
+            db_objects.update(new_values)
+            return self.__update_database(session)
 
     @classmethod
     def category_group(cls, session, category_id):
