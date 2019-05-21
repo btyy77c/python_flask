@@ -1,7 +1,9 @@
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.schema import CheckConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
+
 import datetime
 
 Base = declarative_base()
@@ -10,8 +12,8 @@ class CategoryTable(Base):
     __tablename__ = 'categories'
 
     id = Column(Integer, primary_key=True)
-    created_by = Column(String(250), nullable=False)
-    name = Column(String(250), nullable=False, unique=True)
+    created_by = Column(String(250), CheckConstraint('length(created_by) >= 1'), nullable=False)
+    name = Column(String(250), CheckConstraint('length(name) >= 1'), nullable=False, unique=True)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
 
@@ -31,10 +33,10 @@ class ItemTable(Base):
     id = Column(Integer, primary_key=True)
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(CategoryTable)
-    created_by = Column(String(250), nullable=False)
+    created_by = Column(String(250), CheckConstraint('length(created_by) >= 1'), nullable=False)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
     description = Column(String(250), nullable=False, default='')
-    title = Column(String(250), nullable=False, unique=True)
+    title = Column(String(250), CheckConstraint('length(title) >= 1'), nullable=False, unique=True)
     updated_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
 
     def serialize(self):
