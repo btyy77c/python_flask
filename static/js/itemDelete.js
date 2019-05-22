@@ -5,7 +5,7 @@ let firebaseUser = null
 let path = null
 
 const creatErrorTag = () => {
-  errorTag = document.getElementById('itemDelete')
+  errorTag = document.getElementById('deleteErrors')
 
   errorTag.addEventListener('click', (e) => {
     e.preventDefault()
