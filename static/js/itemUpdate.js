@@ -1,8 +1,31 @@
-import ErrorTag from './errorTag.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+let errorTag = null
 let firebaseUser = null
 let path = null
+
+const creatErrorTag = () => {
+  errorTag = document.getElementById('itemErrors')
+
+  errorTag.addEventListener('click', (e) => {
+    e.preventDefault()
+    errorTag.innerHTML = ''
+  })
+}
+
+const createFormSumbission = () => {
+  const form = document.querySelector('#editItem form')
+
+  document.querySelector('#editDisplay').addEventListener('click', (e) => {
+    e.preventDefault()
+    if (firebaseUser) { hideOrDisplay(form) }
+  })
+
+  document.querySelector('#editItem form button').addEventListener('click', (e) => {
+    e.preventDefault()
+    if (firebaseUser) { submitForm(form, path) }
+  })
+}
 
 const hideOrDisplay = (form) => {
   if (form.classList.contains('hidden')) {
@@ -26,10 +49,10 @@ const submitForm = (form, path) => {
       if (item.errors == undefined) {
         window.location.replace(`/item/${item.title}`)
       } else {
-        ErrorTag.changeErrorMessage(`${category.errors} X`)
+        errorTag.innerHTML = `${category.errors} X`
       }
     }).catch(err => {
-      ErrorTag.changeErrorMessage('Failed to update category X')
+      errorTag.innerHTML = 'Failed to update category X'
     })
   })
 }
@@ -40,19 +63,9 @@ export default {
     if (div == null) { return }
 
     path = location.pathname
-    ErrorTag.load('itemErrors')
 
-    const form = document.querySelector('#editItem form')
-
-    document.querySelector('#editDisplay').addEventListener('click', (e) => {
-      e.preventDefault()
-      if (firebaseUser) { hideOrDisplay(form) }
-    })
-
-    document.querySelector('#editItem form button').addEventListener('click', (e) => {
-      e.preventDefault()
-      if (firebaseUser) { submitForm(form, path) }
-    })
+    creatErrorTag()
+    createFormSumbission()
   },
 
   updateUser(user) {

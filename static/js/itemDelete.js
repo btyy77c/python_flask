@@ -1,8 +1,25 @@
-import ErrorTag from './errorTag.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+let errorTag = null
 let firebaseUser = null
 let path = null
+
+const creatErrorTag = () => {
+  errorTag = document.getElementById('itemDelete')
+
+  errorTag.addEventListener('click', (e) => {
+    e.preventDefault()
+    errorTag.innerHTML = ''
+  })
+}
+
+const createFormSumbission = () => {
+  document.querySelector('#itemDelete button').addEventListener('click', (e) => {
+    e.preventDefault()
+    window.alert('Are you sure you want to delete this item?')
+    if (firebaseUser) { deleteItem(path) }
+  })
+}
 
 const deleteItem = (path) => {
   firebaseUser.getIdToken(true).then(token => {
@@ -10,14 +27,12 @@ const deleteItem = (path) => {
 
     LocaleFetchCall.fetchCall(path, 'DELETE', body).then(item => {
       if (item.errors == undefined) {
-        console.log(item)
         window.location.replace('/')
       } else {
-        ErrorTag.changeErrorMessage(`${item.errors} X`)
+        errorTag.innerHTML = `${item.errors} X`
       }
     }).catch(err => {
-      console.log(err)
-      ErrorTag.changeErrorMessage('Failed to delete item X')
+      errorTag.innerHTML = 'Failed to delete item X'
     })
   })
 }
@@ -28,12 +43,8 @@ export default {
     if (div == null) { return }
 
     path = location.pathname
-    ErrorTag.load('deleteErrors')
-
-    document.querySelector('#itemDelete button').addEventListener('click', (e) => {
-      e.preventDefault()
-      if (firebaseUser) { deleteItem(path) }
-    })
+    creatErrorTag()
+    createFormSumbission()
   },
 
   updateUser(user) {

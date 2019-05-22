@@ -1,7 +1,24 @@
-import ErrorTag from './errorTag.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+let errorTag = null
 let firebaseUser = null
+
+const creatErrorTag = () => {
+  errorTag = document.getElementById('createCategoryErrors')
+
+  errorTag.addEventListener('click', (e) => {
+    e.preventDefault()
+    errorTag.innerHTML = ''
+  })
+}
+
+const createFormSumbission = () => {
+  const form = document.querySelector('#createCategory form')
+  document.querySelector('#createCategory form button').addEventListener('click', (e) => {
+    e.preventDefault()
+    if (firebaseUser) { submitForm(form) }
+  })
+}
 
 const submitForm = (form) => {
   firebaseUser.getIdToken(true).then(token => {
@@ -14,10 +31,10 @@ const submitForm = (form) => {
       if (category.errors == undefined) {
         location.reload()
       } else {
-        ErrorTag.changeErrorMessage(`${category.errors} X`)
+        errorTag.innerHTML = `${category.errors} X`
       }
     }).catch(err => {
-      ErrorTag.changeErrorMessage('Failed to create category X')
+      errorTag.innerHTML = 'Failed to create category X'
     })
   })
 }
@@ -27,12 +44,8 @@ export default {
     const div = document.getElementById('createCategory')
     if (div == null) { return }
 
-    ErrorTag.load('createCategoryErrors')
-    const form = document.querySelector('#createCategory form')
-    document.querySelector('#createCategory form button').addEventListener('click', (e) => {
-      e.preventDefault()
-      if (firebaseUser) { submitForm(form) }
-    })
+    creatErrorTag()
+    createFormSumbission()
   },
 
   updateUser(user) {

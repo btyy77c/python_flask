@@ -1,8 +1,25 @@
-import ErrorTag from './errorTag.js'
 import LocaleFetchCall from './localeFetchCall.js'
 
+let errorTag = null
 let firebaseUser = null
 let path = null
+
+const creatErrorTag = () => {
+  errorTag = document.getElementById('deleteErrors')
+
+  errorTag.addEventListener('click', (e) => {
+    e.preventDefault()
+    errorTag.innerHTML = ''
+  })
+}
+
+const createFormSumbission = () => {
+  document.querySelector('#categoryDelete button').addEventListener('click', (e) => {
+    e.preventDefault()
+    window.alert('Are you sure you want to delete this category?')
+    if (firebaseUser) { deleteCategory(path) }
+  })
+}
 
 const deleteCategory = (path) => {
   firebaseUser.getIdToken(true).then(token => {
@@ -12,11 +29,10 @@ const deleteCategory = (path) => {
       if (category.errors == undefined) {
         window.location.replace('/')
       } else {
-        ErrorTag.changeErrorMessage(`${category.errors} X`)
+        errorTag.innerHTML = `${category.errors} X`
       }
     }).catch(err => {
-      console.log(err)
-      ErrorTag.changeErrorMessage('Failed to delete category X')
+      errorTag.innerHTML = 'Failed to delete category X'
     })
   })
 }
@@ -27,12 +43,9 @@ export default {
     if (div == null) { return }
 
     path = location.pathname
-    ErrorTag.load('deleteErrors')
 
-    document.querySelector('#categoryDelete button').addEventListener('click', (e) => {
-      e.preventDefault()
-      if (firebaseUser) { deleteCategory(path) }
-    })
+    creatErrorTag()
+    createFormSumbission()
   },
 
   updateUser(user) {

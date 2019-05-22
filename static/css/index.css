@@ -43,7 +43,7 @@ nav a {
 #deleteErrors,
 #editErrors,
 #itemErrors {
-  color: #141B41;
+  color: #DC143C;
   cursor: pointer;
   font-size: 0.7em;
   font-style: italic;
