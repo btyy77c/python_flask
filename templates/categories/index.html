@@ -52,6 +52,8 @@
           <textarea aria-label="Item Description" name="description" placeholder="Item Description"></textarea>
 
           <select aria-label="Item Category" name="category_id">
+            <option value="" disabled selected>Choose Catgeory</option>
+
             {% for category in categories %}
               <option value="{{ category.id }}">{{ category.name }}</option>
             {% endfor %}

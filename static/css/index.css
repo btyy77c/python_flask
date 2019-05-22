@@ -2,6 +2,18 @@ nav {
   padding: 0 15px;
 }
 
+select {
+  display: block;
+}
+
+#createCategoryErrors,
+#itemErrors {
+  color: #f44336;
+  cursor: pointer;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
 .card {
   margin: 15px;
 }
