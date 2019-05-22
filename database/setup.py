@@ -31,7 +31,7 @@ class ItemTable(Base):
     __tablename__ = 'items'
 
     id = Column(Integer, primary_key=True)
-    category_id = Column(Integer, ForeignKey('categories.id'))
+    category_id = Column(Integer, ForeignKey('categories.id'), CheckConstraint('length(category_id) >= 1'), nullable=False)
     category = relationship(CategoryTable)
     created_by = Column(String(250), CheckConstraint('length(created_by) >= 1'), nullable=False)
     created_date = Column(DateTime, nullable=False, default=datetime.datetime.now())
