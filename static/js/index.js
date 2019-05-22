@@ -1,3 +1,5 @@
+// Main JS File.
+
 import CategoryCreate from './categoryCreate.js'
 import CategoryDelete from './categoryDelete.js'
 import CategoryUpdate from './categoryUpdate.js'

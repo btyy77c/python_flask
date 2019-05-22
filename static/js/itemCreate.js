@@ -3,6 +3,7 @@ import LocaleFetchCall from './localeFetchCall.js'
 let errorTag = null
 let firebaseUser = null
 
+// Create listener to remove error tag text
 const creatErrorTag = () => {
   errorTag = document.getElementById('itemErrors')
 
@@ -12,6 +13,7 @@ const creatErrorTag = () => {
   })
 }
 
+// JS listener that will trigger form post. Only posts if firebaseUser is present
 const createFormSumbission = () => {
   const form = document.querySelector('#createItem form')
   document.querySelector('#createItem form button').addEventListener('click', (e) => {
@@ -20,6 +22,7 @@ const createFormSumbission = () => {
   })
 }
 
+// posts item data to create new item
 const submitForm = (form) => {
   firebaseUser.getIdToken(true).then(token => {
     const body = JSON.stringify({
@@ -42,6 +45,7 @@ const submitForm = (form) => {
 }
 
 export default {
+  // Load item create form and error messages
   load() {
     const div = document.getElementById('createItem')
     if (div == null) { return }
@@ -50,6 +54,7 @@ export default {
     createFormSumbission()
   },
 
+  // Updates firebaseUser as user logs in and out
   updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('createItem')

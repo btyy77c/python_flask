@@ -4,6 +4,7 @@ let errorTag = null
 let firebaseUser = null
 let path = null
 
+// Create listener to remove error tag text
 const creatErrorTag = () => {
   errorTag = document.getElementById('deleteErrors')
 
@@ -13,6 +14,7 @@ const creatErrorTag = () => {
   })
 }
 
+// JS listener that will trigger delete action. Only deletes if firebaseUser is present
 const createFormSumbission = () => {
   document.querySelector('#itemDelete button').addEventListener('click', (e) => {
     e.preventDefault()
@@ -21,6 +23,7 @@ const createFormSumbission = () => {
   })
 }
 
+// send deletion request to python
 const deleteItem = (path) => {
   firebaseUser.getIdToken(true).then(token => {
     const body = JSON.stringify({ user_token: token })
@@ -38,6 +41,7 @@ const deleteItem = (path) => {
 }
 
 export default {
+  // Load item delete button and error messages
   load() {
     const div = document.getElementById('itemDelete')
     if (div == null) { return }
@@ -47,6 +51,7 @@ export default {
     createFormSumbission()
   },
 
+  // Updates firebaseUser as user logs in and out
   updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('itemDelete')

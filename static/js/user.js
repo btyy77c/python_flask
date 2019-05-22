@@ -1,3 +1,4 @@
+// Create login/logout text
 const createSpan = (div, label) => {
   div.innerHTML = ''
   const span = document.createElement('span')
@@ -6,11 +7,13 @@ const createSpan = (div, label) => {
   return span
 }
 
+// div where login/logout text is located
 const userSignInDiv = () => {
   return document.getElementById('userSignIn')
 }
 
 export default {
+  // add login button to page
   login(provider) {
     const div = userSignInDiv()
 
@@ -22,6 +25,7 @@ export default {
     })
   },
 
+  // add logout button to page
   logout(user) {
     const div = userSignInDiv()
 

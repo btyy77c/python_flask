@@ -4,6 +4,7 @@ let errorTag = null
 let firebaseUser = null
 let path = null
 
+// Create listener to remove error tag text
 const creatErrorTag = () => {
   errorTag = document.getElementById('editErrors')
 
@@ -13,6 +14,7 @@ const creatErrorTag = () => {
   })
 }
 
+// JS listener that will trigger update action. Only updates if firebaseUser is present
 const createFormSumbission = () => {
   const form = document.querySelector('#categoryEdit form')
 
@@ -27,6 +29,7 @@ const createFormSumbission = () => {
   })
 }
 
+// JS to hide/display edit form
 const hideOrDisplay = (form) => {
   if (form.classList.contains('hidden')) {
     form.classList.remove('hidden')
@@ -35,6 +38,7 @@ const hideOrDisplay = (form) => {
   }
 }
 
+// send update request to python
 const submitForm = (form, path) => {
   firebaseUser.getIdToken(true).then(token => {
     const body = JSON.stringify({
@@ -56,6 +60,7 @@ const submitForm = (form, path) => {
 }
 
 export default {
+  // Load category edit form and error messages
   load() {
     const div = document.getElementById('categoryEdit')
     if (div == null) { return }
@@ -65,6 +70,7 @@ export default {
     createFormSumbission()
   },
 
+  // Updates firebaseUser as user logs in and out
   updateUser(user) {
     firebaseUser = user
     const div = document.getElementById('categoryEdit')

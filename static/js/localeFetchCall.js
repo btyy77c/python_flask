@@ -1,3 +1,5 @@
+// Centralizes fetch calls to one place
+
 export default {
   fetchCall(path, method, body) {
     return fetch(path, {
