@@ -1,8 +1,9 @@
 const createSpan = (div, label) => {
+  div.innerHTML = ''
   const span = document.createElement('span')
   span.innerHTML = label
   div.appendChild(span)
-  return button
+  return span
 }
 
 const userSignInDiv = () => {
@@ -12,18 +13,22 @@ const userSignInDiv = () => {
 export default {
   login(provider) {
     const div = userSignInDiv()
-    div.innerHTML = ''
 
-    createSpan(div, 'Sign In With Google Email').addEventListener('click', (e) => {
+    createSpan(div, 'Sign In With Google Email')
+
+    div.addEventListener('click', (e) => {
+      e.preventDefault()
       firebase.auth().signInWithRedirect(provider)
     })
   },
 
   logout(user) {
     const div = userSignInDiv()
-    div.innerHTML = ''
 
-    createButton(div, `Sign Out ${user.email}`).addEventListener('click', (e) => {
+    createSpan(div, `Sign Out ${user.email}`)
+
+    div.addEventListener('click', (e) => {
+      e.preventDefault()
       firebase.auth().signOut()
     })
   }
