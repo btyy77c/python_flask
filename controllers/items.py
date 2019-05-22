@@ -1,7 +1,10 @@
 import os
 import sys
-from os.path import dirname, join, abspath
+
 from flask import render_template, jsonify
+from sqlalchemy import exc
+from os.path import dirname, join, abspath
+
 sys.path.insert(0, abspath(join(dirname(__file__), '../models')))
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
@@ -23,7 +26,8 @@ class ItemsController:
             user = UserModel(form['user_token'])
             form['created_by'] = user.email
             item = ItemModel(form).create(self.db_session)
-        except:
+        except exc.IntegrityError as e:
+            self.db_session.rollback()
             item = ItemModel({'errors': 'Error Creating Item'})
         finally:
             self.db_session.close()
@@ -36,7 +40,8 @@ class ItemsController:
             item = ItemModel(
                 {'title': title, 'created_by': user.email}
             ).delete(self.db_session)
-        except:
+        except exc.IntegrityError as e:
+            self.db_session.rollback()
             item = ItemModel({'errors': 'Error Deleting Item'})
         finally:
             self.db_session.close()
@@ -69,7 +74,8 @@ class ItemsController:
             user = UserModel(form_data['user_token'])
             form_data['created_by'] = user.email
             item = ItemModel(form_data).update(self.db_session)
-        except:
+        except exc.IntegrityError as e:
+            self.db_session.rollback()
             item = ItemModel({'errors': 'Error Updating Item'})
         finally:
             self.db_session.close()

@@ -1,7 +1,10 @@
 import os
 import sys
-from os.path import dirname, join, abspath
+
 from flask import render_template, jsonify
+from sqlalchemy import exc
+from os.path import dirname, join, abspath
+
 sys.path.insert(0, abspath(join(dirname(__file__), '../models')))
 sys.path.insert(0, abspath(join(dirname(__file__), '../database')))
 
@@ -23,8 +26,9 @@ class CategoriesController:
             user = UserModel(form_data['user_token'])
             form_data['created_by'] = user.email
             category = CategoryModel(form_data).create(self.db_session)
-        except:
-            category = CategoryModel({'errors': 'Error Creating Category'})
+        except exc.IntegrityError as e:
+            self.db_session.rollback()
+            category = CategoryModel({'errors': 'failed to update database'})
         finally:
             self.db_session.close()
 
@@ -36,7 +40,8 @@ class CategoriesController:
             category = CategoryModel(
                 {'name': name, 'created_by': user.email}
             ).delete(self.db_session)
-        except:
+        except exc.IntegrityError as e:
+            self.db_session.rollback()
             category = CategoryModel({'errors': 'Error Deleting Category'})
         finally:
             self.db_session.close()
@@ -66,7 +71,7 @@ class CategoriesController:
             user = UserModel(form_data['user_token'])
             form_data['created_by'] = user.email
             category = CategoryModel(form_data).update(self.db_session)
-        except:
+        except exc.IntegrityError as e:
             self.db_session.rollback()
             category = CategoryModel({'errors': 'Error Updating Category'})
         finally:
