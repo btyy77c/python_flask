@@ -14,23 +14,48 @@ class ItemsController:
         self.db_session = Session()
 
     def create(self, form):
-        user = UserModel(form['user_token'])
-        form['created_by'] = user.email
-        item = ItemModel(form).create(self.db_session)
+        try:
+            user = UserModel(form['user_token'])
+            form['created_by'] = user.email
+            item = ItemModel(form).create(self.db_session)
+        except:
+            item = ItemModel({ 'errors': 'Error Creating Item' })
+        finally:
+            self.db_session.close()
+
         return jsonify(item.attributes())
 
     def delete(self, title, form_data):
-        user = UserModel(form_data['user_token'])
-        item = ItemModel({ 'title': title, 'created_by': user.email }).delete(self.db_session)
+        try:
+            user = UserModel(form_data['user_token'])
+            item = ItemModel({ 'title': title, 'created_by': user.email }).delete(self.db_session)
+        except:
+            item = ItemModel({ 'errors': 'Error Deleting Item' })
+        finally:
+            self.db_session.close()
+
         return jsonify(item.attributes())
 
     def index(self, category_name):
-        category = CategoryModel.find(self.db_session, category_name)
-        items = ItemModel.category_group(self.db_session, category.id)
+        try:
+            category = CategoryModel.find(self.db_session, category_name)
+            items = ItemModel.category_group(self.db_session, category.id)
+        except:
+            category = CategoryModel({ 'errors': 'Error Finding Category' })
+            items = []
+        finally:
+            self.db_session.close()
+
         return render_template('items/index.html', category=category, items=items)
 
     def show(self, title, headers):
-        item = ItemModel.find(self.db_session, title)
+        try:
+            item = ItemModel.find(self.db_session, title)
+        except:
+            item = ItemModel({ 'errors': 'Error Finding Item' })
+        finally:
+            self.db_session.close()
+
         if headers == 'application/json':
             return jsonify(item.attributes())
         else:
@@ -38,7 +63,12 @@ class ItemsController:
             return render_template('items/show.html', item=item, categories=categories)
 
     def update(self, form_data):
-        user = UserModel(form_data['user_token'])
-        form_data['created_by'] = user.email
-        item = ItemModel(form_data).update(self.db_session)
+        try:
+            user = UserModel(form_data['user_token'])
+            form_data['created_by'] = user.email
+            item = ItemModel(form_data).update(self.db_session)
+        except:
+            item = ItemModel({ 'errors': 'Error Updating Item' })
+        finally:
+            self.db_session.close()
         return jsonify(item.attributes())

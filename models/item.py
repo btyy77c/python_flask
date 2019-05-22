@@ -16,13 +16,8 @@ class ItemModel:
         self.title = values_hash.get('title', None)
         self.updated_date = values_hash.get('updated_date', None)
 
-    def __update_database(self, session):
-        try:
-            session.commit()
-        except:
-            session.rollback()
-            self.errors = 'failed to update database'
-        return self
+    def __not_null_attributes(self):
+        return { k: v for k, v in self.attributes().items() if v is not None }
 
     def attributes(self):
         return {
@@ -38,14 +33,9 @@ class ItemModel:
 
     def create(self, session):
         if self.id == None:
-            db_object = ItemTable(
-                category_id = self.category_id,
-                created_by = self.created_by,
-                description = self.description,
-                title = self.title
-            )
+            db_object = ItemTable(**self.__not_null_attributes())
             session.add(db_object)
-            self.__update_database(session)
+            session.commit()
             self.id = db_object.id
             return self
         else:
@@ -56,25 +46,22 @@ class ItemModel:
 
         if self.created_by == db_object.created_by:
             session.delete(db_object)
-            return self.__update_database(session)
+            session.commit()
         else:
             self.errors = 'Only ' + db_object.created_by + ' can delete'
-            return self
+        return self
 
     def update(self, session):
         db_objects = session.query(ItemTable).filter_by(id = self.id)
         db_object = db_objects.one()
 
-        if self.id == None:
-            return self.create(session)
-        elif db_object.created_by != self.created_by:
+        if db_object.created_by != self.created_by:
             self.errors = 'Only ' + db_object.created_by + ' can update'
-            return self
         else:
             self.updated_date = datetime.datetime.now()
-            new_values = { k: v for k, v in self.attributes().items() if v is not None }
-            db_objects.update(new_values)
-            return self.__update_database(session)
+            db_objects.update(self.__not_null_attributes())
+            session.commit()
+        return self
 
     @classmethod
     def category_group(cls, session, category_id):
