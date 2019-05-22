@@ -8,7 +8,7 @@
       <ul class="collection">
         {% for category in categories %}
           <li class="collection-item">
-            <h5>{{ category.name }}</h5>
+            <h6>{{ category.name }}</h6>
 
             <a href="{{ url_for('CategoryShow', name=category.name) }}"><p>View Category</p></a>
 
@@ -21,12 +21,7 @@
     <div class="card-action">
       <div id='createCategory' class='hidden'>
         <form>
-          <div class="row">
-            <div class="input-field">
-              <input type="text" aria-label="Category Name" name="name" placeholder="Category Name">
-            </div>
-          </div>
-
+          <input type="text" aria-label="Category Name" name="name" placeholder="Category Name">
           <button class="btn waves-effect waves-light">Create New Category</button>
         </form>
         <p id='createCategoryErrors'></p>
@@ -34,32 +29,38 @@
     </div>
   </div>
 
-  <div class='catgeory-index-header'>
-    <h2>Latest Items</h2>
-    <div id='createItem' class='hidden'>
-      <form>
-        <input type="text" aria-label="Item Title" name="title" placeholder="Item Title">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Latest Items</span>
 
-        <textarea aria-label="Item Description" name="description" placeholder="Item Description"></textarea>
+      <ul class="collection">
+        {% for item in items %}
+          <li class="collection-item">
+            <h6>{{ item.title }}</h6>
 
-        <select aria-label="Item Category" name="category_id">
-          {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-          {% endfor %}
-        <select>
-
-        <button>Create Item</button>
-      </form>
-      <p id='itemErrors'></p>
+            <a href="{{ url_for('ItemShow', title=item.title) }}"><p>View Item</p></a>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
-  </div>
 
-  <div class='catgeory-index-list'>
-    {% for item in items %}
-      <h3>{{ item.title }}</h3>
-      <a href="{{ url_for('ItemShow', title=item.title) }}">
-        <p>View Item</p>
-      </a>
-    {% endfor %}
+    <div class="card-action">
+      <div id='createItem' class='hidden'>
+        <form>
+          <input type="text" aria-label="Item Title" name="title" placeholder="Item Title">
+
+          <textarea aria-label="Item Description" name="description" placeholder="Item Description"></textarea>
+
+          <select aria-label="Item Category" name="category_id">
+            {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          <select>
+
+          <button class="btn waves-effect waves-light">Create Item</button>
+        </form>
+        <p id='itemErrors'></p>
+      </div>
+    </div>
   </div>
 {% endblock %}
