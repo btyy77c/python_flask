@@ -1,29 +1,37 @@
 {% extends 'layout/index.html' %}
 
 {% block content %}
-  <div class='catgeory-index-header'>
-    <h2>Categories ({{ categories.__len__() }})</h2>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Categories ({{ categories.__len__() }})</span>
 
-    <div id='createCategory' class='hidden'>
-      <form>
-        <input type="text" aria-label="Category Name" name="name" placeholder="Category Name">
-        <button>Create Category</button>
-      </form>
-      <p id='createCategoryErrors'></p>
+      <ul class="collection">
+        {% for category in categories %}
+          <li class="collection-item">
+            <h5>{{ category.name }}</h5>
+
+            <a href="{{ url_for('CategoryShow', name=category.name) }}"><p>View Category</p></a>
+
+            <a href="{{ url_for('ItemIndex', name=category.name) }}"><p>View Items</p></a>
+          </li>
+        {% endfor %}
+      </ul>
     </div>
-  </div>
 
-  <div class='catgeory-index-list'>
-    {% for category in categories %}
-      <h3>{{ category.name }}</h3>
-      <a href="{{ url_for('CategoryShow', name=category.name) }}">
-        <p>View Category</p>
-      </a>
+    <div class="card-action">
+      <div id='createCategory' class='hidden'>
+        <form>
+          <div class="row">
+            <div class="input-field">
+              <input type="text" aria-label="Category Name" name="name" placeholder="Category Name">
+            </div>
+          </div>
 
-      <a href="{{ url_for('ItemIndex', name=category.name) }}">
-        <p>View Items</p>
-      </a>
-    {% endfor %}
+          <button class="btn waves-effect waves-light">Create New Category</button>
+        </form>
+        <p id='createCategoryErrors'></p>
+      </div>
+    </div>
   </div>
 
   <div class='catgeory-index-header'>

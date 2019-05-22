@@ -2,6 +2,16 @@ nav {
   padding: 0 15px;
 }
 
+.card {
+  margin: 15px;
+}
+
+.collection-item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
 .hidden {
   display: none;
 }
