@@ -12,7 +12,7 @@ except ImportError:
 
 class ItemModel:
     def __init__(self, values_hash):
-        """Creates item with values match database object"""
+        """Creates item with values matching database object"""
         self.id = values_hash.get('id', None)
         self.errors = values_hash.get('errors', None)
         self.category_id = values_hash.get('category_id', None)
@@ -40,9 +40,8 @@ class ItemModel:
         }
 
     def create(self, session):
-        """adds new object to the database"""
+        """adds new item to the database"""
         if self.id is None:
-            """add object to database"""
             db_object = ItemTable(**self.__not_null_attributes())
             session.add(db_object)
             session.commit()
