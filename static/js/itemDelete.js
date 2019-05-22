@@ -16,8 +16,8 @@ const creatErrorTag = () => {
 const createFormSumbission = () => {
   document.querySelector('#itemDelete button').addEventListener('click', (e) => {
     e.preventDefault()
-    window.alert('Are you sure you want to delete this item?')
-    if (firebaseUser) { deleteItem(path) }
+    let c = confirm('Are you sure you want to delete this item?')
+    if (c && firebaseUser) { deleteItem(path) }
   })
 }
 

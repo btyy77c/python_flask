@@ -16,8 +16,8 @@ const creatErrorTag = () => {
 const createFormSumbission = () => {
   document.querySelector('#categoryDelete button').addEventListener('click', (e) => {
     e.preventDefault()
-    window.alert('Are you sure you want to delete this category?')
-    if (firebaseUser) { deleteCategory(path) }
+    let c = confirm('Are you sure you want to delete this category?')
+    if (c && firebaseUser) { deleteCategory(path) }
   })
 }
 
