@@ -1,7 +1,7 @@
-const createButton = (div, label) => {
-  const button = document.createElement('button')
-  button.innerHTML = label
-  div.appendChild(button)
+const createSpan = (div, label) => {
+  const span = document.createElement('span')
+  span.innerHTML = label
+  div.appendChild(span)
   return button
 }
 
@@ -14,7 +14,7 @@ export default {
     const div = userSignInDiv()
     div.innerHTML = ''
 
-    createButton(div, 'Sign In With Google Email').addEventListener('click', (e) => {
+    createSpan(div, 'Sign In With Google Email').addEventListener('click', (e) => {
       firebase.auth().signInWithRedirect(provider)
     })
   },

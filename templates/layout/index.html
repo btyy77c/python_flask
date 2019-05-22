@@ -10,6 +10,9 @@
     <!-- Normalize.css for better cross-browser consistency -->
     <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
 
+    <!-- Material Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
     <!-- CSS file -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
@@ -25,8 +28,17 @@
 
   <body>
     <nav>
-      <a href='/'><p>All Categories</p></a>
-      <div id='userSignIn'><p>Checking for user. Please wait</p></div>
+      <div class='nav-wrapper'>
+        <a href='/' class='brand-logo'>All Categories</a>
+
+        <ul class='right'>
+          <li>
+            <p id='userSignIn' class='waves-effect waves-light btn right'>
+              Checking for user. Please wait
+            </p>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     {% block content %}

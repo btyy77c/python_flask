@@ -1,56 +1,5 @@
-a {
-  color: #306BAC;
-  text-decoration: none;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body a {
-  text-decoration: none;
-}
-
-body > * {
-  padding: 0 15px;
-}
-
-button {
-  background-color: #98B9F2;
-  border: 0;
-  color: #141B41;
-  cursor: pointer;
-  padding: 7px;
-}
-
 nav {
-  align-items: center;
-  background-color: #306BAC;
-  border-bottom: 1px solid #ccc;
-  color: #fff;
-  display: grid;
-  grid-template-columns: 45% 45%;
-  justify-content: space-between;
-}
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-}
-
-#createCategoryErrors,
-#deleteErrors,
-#editErrors,
-#itemErrors {
-  color: #DC143C;
-  cursor: pointer;
-  font-size: 0.7em;
-  font-style: italic;
-}
-
-#userSignIn {
-  text-align: right;
+  padding: 0 15px;
 }
 
 .hidden {
