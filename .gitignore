@@ -1,4 +1,4 @@
 *.pyc
 
-models/creds.json
+creds.json
 static/js/firebaseConfig.js
