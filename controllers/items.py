@@ -19,10 +19,13 @@ except ImportError:
 
 class ItemsController:
     def __init__(self):
+        """Initializes model with database connection"""
         self.db_session = Session()
 
     def create(self, form):
+        """Creates a new item and returns a json object with item values"""
         try:
+            """form includes user_token, which is used to get user email"""
             user = UserModel(form['user_token'])
             form['created_by'] = user.email
             item = ItemModel(form).create(self.db_session)
@@ -35,7 +38,9 @@ class ItemsController:
         return jsonify(item.attributes())
 
     def delete(self, title, form_data):
+        """Deletes an item and returns a json object with the item values"""
         try:
+            """form includes user_token, which is used to get user email"""
             user = UserModel(form_data['user_token'])
             item = ItemModel(
                 {'title': title, 'created_by': user.email}
@@ -49,6 +54,7 @@ class ItemsController:
         return jsonify(item.attributes())
 
     def index(self, category_name):
+        """Queries category and related items, then renders index view"""
         category = CategoryModel.find(self.db_session, category_name)
         items = ItemModel.category_group(self.db_session, category.id)
         self.db_session.close()
@@ -58,6 +64,7 @@ class ItemsController:
         )
 
     def show(self, title, headers):
+        """Queries single item. Returns html or json view"""
         item = ItemModel.find(self.db_session, title)
         self.db_session.close()
 
@@ -70,7 +77,9 @@ class ItemsController:
             )
 
     def update(self, form_data):
+        """Updates an item and returns a json object with the item values"""
         try:
+            """form includes user_token, which is used to get user email"""
             user = UserModel(form_data['user_token'])
             form_data['created_by'] = user.email
             item = ItemModel(form_data).update(self.db_session)
