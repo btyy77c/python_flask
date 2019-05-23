@@ -53,15 +53,23 @@ class ItemsController:
 
         return jsonify(item.attributes())
 
-    def index(self, category_name):
+    def index(self, category_name, headers):
         """Queries category and related items, then renders index view"""
         category = CategoryModel.find(self.db_session, category_name)
         items = ItemModel.category_group(self.db_session, category.id)
         self.db_session.close()
 
-        return render_template(
-            'items/index.html', category=category, items=items
-        )
+        if headers == 'application/json':
+            json_items = []
+            for item in items:
+                json_items.append(item.attributes())
+            return jsonify(
+                {'category': category.attributes(), 'items': json_items}
+            )
+        else:
+            return render_template(
+                'items/index.html', category=category, items=items
+            )
 
     def show(self, title, headers):
         """Queries single item. Returns html or json view"""
