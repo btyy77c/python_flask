@@ -105,7 +105,8 @@ class ItemModel:
     def latest(cls, session):
         """find 10 most recent items"""
         db_items = session.query(ItemTable).order_by(
-            ItemTable.created_date.desc()
+            ItemTable.created_date.desc(),
+            ItemTable.id.desc()
         ).limit(10)
         items = []
         for db_item in db_items:
