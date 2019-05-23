@@ -52,7 +52,13 @@ def CategoryShow(name):
 @app.route('/category/<name>/items')
 def ItemIndex(name):
     """Uses ItemsController to render item index view"""
-    return ItemsController().index(name)
+    return ItemsController().index(name, 'text/html')
+
+
+@app.route('/category/<name>/items/JSON')
+def ItemIndexJson(name):
+    """Displays a list of items as json"""
+    return ItemsController().index(name, 'application/json')
 
 
 @app.route('/item/<title>', methods=['GET', 'DELETE', 'PUT'])
@@ -71,6 +77,12 @@ def ItemShow(title):
         return ItemsController().show(
             title, request.headers.get('Content-Type', '')
         )
+
+
+@app.route('/item/<title>/JSON', methods=['GET', 'DELETE', 'PUT'])
+def ItemShowJson(title):
+    """Displays a single item as json"""
+    return ItemsController().show(title, 'application/json')
 
 
 @app.route('/items', methods=['POST'])
