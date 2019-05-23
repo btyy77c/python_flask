@@ -4,6 +4,9 @@
 - The app allows anyone to view Categories and Items
 - The app allows a user to write to the database, after user login.
 - User login is using Google's Firebase Authentication.  I only setup google email auth but firebase allows additional authentication options.
+- The application also includes two JSON api end points:
+   `/item/<title>/JSON`
+   `/category/<name>/items/JSON`
 
 #### Setup Steps
 
