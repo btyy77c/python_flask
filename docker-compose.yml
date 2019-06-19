@@ -7,6 +7,6 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ${PWD}/../creds.json:/catalog/creds.json
-      - ${PWD}/../firebaseConfig.js:/catalog/static/js/firebaseConfig.js
+      - ../creds.json:/catalog/creds.json
+      - ../firebaseConfig.js:/catalog/static/js/firebaseConfig.js
       - .:/catalog
