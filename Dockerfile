@@ -5,9 +5,11 @@ WORKDIR $APP_HOME
 
 RUN apt-get update -y && apt-get upgrade -y
 
-RUN apt-get install -y python3-pip
-RUN pip3 install --upgrade pip
+ENV PYTHON python3-pip
+ENV UWSGI libpcre3 libpcre3-dev
 
+RUN apt-get install -y $PYTHON $UWSGI
+RUN pip3 install --upgrade pip
 
 COPY requirements.txt $APP_HOME/requirements.txt
 RUN pip3 install -r requirements.txt
