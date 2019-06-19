@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  web:
+    build: .
+    command: python3 application.py
+    ports:
+      - "5000:5000"
+    volumes:
+      - ${PWD}/../creds.json:/catalog/creds.json
+      - ${PWD}/../firebaseConfig.js:/catalog/static/js/firebaseConfig.js
+      - .:/catalog
