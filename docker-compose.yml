@@ -2,6 +2,7 @@ version: '3.5'
 
 services:
   web:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile-python
@@ -12,6 +13,7 @@ services:
       - .:/catalog
 
   nginx:
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile-nginx
