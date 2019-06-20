@@ -47,10 +47,10 @@ I followed these setps to start my application
  - Run `sudo docker-compose down` to shut down any running containers
  - Run `sudo docker-compose build` to build new docker images.
  - Run `sudo docker-compose up` to restart the containers
-* You can also repeat steps 1-4 on your local machine and visit the app locally at http://0.0.0.0:8000/.  You'll need to make sure you have the `creds.json` and the `firebaseConfig.js` files located in the app's parent folder.
+* You can also repeat steps 1-4 on your local machine and visit the app locally at http://0.0.0.0:8000/.  You'll need to make sure you have the `creds.json` and the `firebaseConfig.js` files are located in the app's parent folder.
 
 ### third-party resources
-- I reviewed a lot of medium, stackoverflow, and GitHub sites
+- I reviewed a lot of Medium, Stackoverflow, and GitHub sites
 - The three sites I referenced most were:
 1. https://github.com/kcalata/Linux-Server-Configuration/blob/master/README.md
 2. https://github.com/ashokjain001/Linux_Server_Configuration
