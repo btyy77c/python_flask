@@ -1,11 +1,11 @@
 # Basic Python Flask App
 ## Deployment Information
 #####  IP address
-- 34.205.90.150
+- I've taken down the site
 #####  SSH port
-- 2200
+- I've taken down the site
 #####  Site URL
-- http://34.205.90.150/
+- I've taken down the site
 
 ### Summary of Software Installed
 - `python3-pip`, `libpcre3`, `libpcre3-dev` were installed for python (https://github.com/btyy77c/python_flask/blob/production/Dockerfile-python)
@@ -30,7 +30,7 @@ https://github.com/kcalata/Linux-Server-Configuration/blob/master/README.md I ad
 - My python application was added to the server in location `/var/www/catalog/catalog`
 
 ###### Process to add the application to the server
-I followed these setps to start my application
+I followed these steps to start my application
 
 1. Added credentials
  - ssh into server
@@ -47,7 +47,7 @@ I followed these setps to start my application
  - Run `sudo docker-compose down` to shut down any running containers
  - Run `sudo docker-compose build` to build new docker images.
  - Run `sudo docker-compose up` to restart the containers
-* You can also repeat steps 1-4 on your local machine and visit the app locally at http://0.0.0.0:8000/.  You'll need to make sure you have the `creds.json` and the `firebaseConfig.js` files are located in the app's parent folder.
+* You can also repeat steps 1-4 on your local machine and visit the app locally at http://0.0.0.0:80/.  You'll need to make sure you have the `creds.json` and the `firebaseConfig.js` files are located in the app's parent folder.
 
 ### third-party resources
 - I reviewed a lot of Medium, Stackoverflow, and GitHub sites
